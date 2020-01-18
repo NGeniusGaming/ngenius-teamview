@@ -3,13 +3,14 @@ name: Build and Test Website Application
 on:
   push:
     branches:
-      - '!master' # - we do not need to build and test master again.
+      - '**' # - build the project on the push of any branch
+      - '!master' # - exclude master, which we do not need to build and test again.
   pull_request:
     branches:
-      - 'master' # - we only want to trigger a pull request build when the target is master.
+      - master # - we only want to trigger a pull request build when the target is master.
 
 jobs:
-  deploy-gh-pages:
+  build-and-test:
 
     runs-on: ubuntu-latest
 
@@ -18,6 +19,17 @@ jobs:
         node-version: [12.x]
 
     steps:
+      - name: Install ChromeDriver
+        run: |
+          CHROME_VERSION=$(google-chrome --version | cut -f 3 -d ' ' | cut -d '.' -f 1) \
+            && CHROMEDRIVER_RELEASE=$(curl --location --fail --retry 3 http://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_VERSION}) \
+            && curl --silent --show-error --location --fail --retry 3 --output /tmp/chromedriver_linux64.zip "http://chromedriver.storage.googleapis.com/$CHROMEDRIVER_RELEASE/chromedriver_linux64.zip" \
+            && cd /tmp \
+            && unzip chromedriver_linux64.zip \
+            && rm -rf chromedriver_linux64.zip \
+            && sudo mv chromedriver /usr/local/bin/chromedriver \
+            && sudo chmod +x /usr/local/bin/chromedriver \
+            && chromedriver --version
       - uses: actions/checkout@v1
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
@@ -27,5 +39,5 @@ jobs:
         run: |
           npm install -g @angular/cli
           npm ci
-          npm run build --aot
-          npm run test
+          ng build --aot
+          ng test --watch=false --browsers=ChromeNoSandboxHeadless

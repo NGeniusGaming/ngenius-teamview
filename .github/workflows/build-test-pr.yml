@@ -1,0 +1,31 @@
+name: Build and Test Website Application
+
+on:
+  push:
+    branches:
+      - '!master' # - we do not need to build and test master again.
+  pull_request:
+    branches:
+      - 'master' # - we only want to trigger a pull request build when the target is master.
+
+jobs:
+  deploy-gh-pages:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: npm install angular/cli, npm ci project, ng build --aot, ng test
+        run: |
+          npm install -g @angular/cli
+          npm ci
+          npm run build --aot
+          npm run test

@@ -39,5 +39,5 @@ jobs:
         run: |
           npm install -g @angular/cli
           npm ci
-          npm run build --aot
-          npm run test
+          ng build --aot
+          ng test --watch=false --browsers=ChromeNoSandboxHeadless

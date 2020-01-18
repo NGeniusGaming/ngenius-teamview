@@ -1,0 +1,31 @@
+name: Build and Deploy Github Pages
+
+on:
+  push:
+    branches:
+      - master # - only push to GitHub pages from the master branch
+
+jobs:
+  deploy-gh-pages:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: npm install angular/cli, npm ci project, ng deploy gh-pages
+        run: |
+          npm install -g @angular/cli
+          npm ci
+          ng deploy --repo=https://github.com/NGeniusGaming/NGeniusGaming.github.io.git --name=NGeniusGaming --email=$EMAIL --message="Built from ${GITHUB_SHA} in the source repository." --branch=master
+        env:
+          CI: true
+          GH_TOKEN: ${{ secrets.GithubToken }}
+          EMAIL: ${{ secrets.Email }}

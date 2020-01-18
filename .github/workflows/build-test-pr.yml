@@ -1,10 +1,6 @@
 name: Build and Test Website Application
 
 on:
-  push:
-    branches:
-      - '**' # - build the project on the push of any branch
-      - '!master' # - exclude master, which we do not need to build and test again.
   pull_request:
     branches:
       - master # - we only want to trigger a pull request build when the target is master.

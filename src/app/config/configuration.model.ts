@@ -4,7 +4,13 @@
  * between configuration usage and actual configuration.
  */
 export interface Configuration {
+  readonly root: RootConfiguration;
   readonly twitch: TwitchServiceConfiguration;
+}
+
+export interface RootConfiguration {
+  readonly applicationLogo: string;
+  readonly applicationTitle: string;
 }
 
 /**

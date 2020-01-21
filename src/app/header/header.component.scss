@@ -1,0 +1,20 @@
+.application-logo {
+  margin-right: 0.1em;
+  img {
+    padding-top: 8px;
+    object-fit: cover;
+    width: 48px;
+    height: 48px;
+    background-size: cover;
+  }
+}
+
+.application-title {
+  margin-right: 0.5em;
+  font-size: larger;
+}
+
+.service-provider-btn {
+  margin-right: 0.25em;
+  font-size: smaller;
+}

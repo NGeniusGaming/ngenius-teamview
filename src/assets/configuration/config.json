@@ -1,0 +1,10 @@
+{
+  "root": {
+    "applicationLogo": "assets/ngen.png",
+    "applicationTitle": "NGenius Gaming"
+  },
+  "twitch": {
+    "display": true,
+    "users": []
+  }
+}

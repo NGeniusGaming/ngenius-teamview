@@ -4,6 +4,19 @@
  * between configuration usage and actual configuration.
  */
 export interface Configuration {
-  // placeholder for twitch configuration
-  twitch: object;
+  readonly twitch: TwitchServiceConfiguration;
+}
+
+/**
+ * Additional twitch specific configurations beyond the {BaseServiceConfiguration}
+ */
+export interface TwitchServiceConfiguration extends BaseServiceConfiguration {
+  readonly users: string[];
+}
+
+/**
+ * The base configuration interface for common properties between various service providers.
+ */
+export interface BaseServiceConfiguration {
+  readonly display: boolean;
 }

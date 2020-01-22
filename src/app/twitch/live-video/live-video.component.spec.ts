@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LiveVideoComponent } from './live-video.component';
+import {MatCardModule} from '@angular/material';
 
 describe('LiveVideoComponent', () => {
   let component: LiveVideoComponent;
@@ -8,6 +9,7 @@ describe('LiveVideoComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [ MatCardModule ],
       declarations: [ LiveVideoComponent ]
     })
     .compileComponents();

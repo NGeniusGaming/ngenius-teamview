@@ -18,7 +18,7 @@ export interface RootConfiguration {
  * Additional twitch specific configurations beyond the {BaseServiceConfiguration}
  */
 export interface TwitchServiceConfiguration extends BaseServiceConfiguration {
-  readonly users: string[];
+  readonly channels: string[];
 }
 
 /**

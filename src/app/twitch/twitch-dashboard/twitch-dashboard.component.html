@@ -1,1 +1,3 @@
-<p>twitch-dashboard works!</p>
+<ng-container *ngFor="let channel of channels">
+  <app-live-video [channel]="channel"></app-live-video>
+</ng-container>

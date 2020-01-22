@@ -6,6 +6,8 @@
   },
   "twitch": {
     "display": true,
-    "users": []
+    "channels": [
+      "NGeniusGaming"
+    ]
   }
 }

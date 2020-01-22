@@ -1,10 +1,13 @@
 {
   "root": {
     "applicationLogo": "assets/ngen.png",
-    "applicationTitle": "NGenius Gaming"
+    "applicationTitle": "NGenius Gaming",
+    "externalWebsiteLink": "https://www.ngeniusgaming.com/"
   },
   "twitch": {
     "display": true,
-    "users": []
+    "channels": [
+      "NGeniusGaming"
+    ]
   }
 }

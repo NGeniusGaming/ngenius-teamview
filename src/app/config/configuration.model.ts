@@ -11,6 +11,7 @@ export interface Configuration {
 export interface RootConfiguration {
   readonly applicationLogo: string;
   readonly applicationTitle: string;
+  readonly externalWebsiteLink: string;
 }
 
 /**

@@ -1,14 +1,17 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ConfigurationService} from '../../config/configuration.service';
-import {combineLatest, Observable, Subscription} from 'rxjs';
+import {BehaviorSubject, combineLatest, Observable, Subscription} from 'rxjs';
 import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/layout';
 import {map} from 'rxjs/operators';
-import {Configuration} from '../../config/configuration.model';
+import {ThemePalette} from '@angular/material';
+
+type Column = 1 | 2 | 3 | 4 | 5 | 6;
+type Row = 1 | 2 | 3 | 4;
 
 interface TwitchCardMeasurements {
   readonly channel: string;
-  readonly cols: 1 | 2 | 3;
-  readonly rows: 1 | 2;
+  readonly cols: Column;
+  readonly rows: Row;
 }
 
 @Component({
@@ -18,37 +21,82 @@ interface TwitchCardMeasurements {
 })
 export class TwitchDashboardComponent implements OnInit, OnDestroy {
 
-  public channels: string[];
   public sizedChannels: TwitchCardMeasurements[];
 
   private _subscription = new Subscription();
 
-  private configuration$: Observable<Configuration>;
+  private _pinnedChannels: string[] = [];
+
+  private channels$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
   private breakpoint$: Observable<BreakpointState>;
 
   constructor(private _configurationService: ConfigurationService, private _breakpointObserver: BreakpointObserver) {
   }
 
   ngOnInit() {
-    this.configuration$ = this._configurationService.configuration();
+    this._subscription.add(
+      this._configurationService.configuration().pipe(
+        map(value => value.twitch.channels)
+      ).subscribe(value => this.channels$.next(value)));
+
     this.breakpoint$ = this._breakpointObserver.observe(Breakpoints.Handset);
 
     this._subscription.add(
-      this.configuration$
-        .subscribe(value => this.channels = value.twitch.channels)
-    );
-
-    this._subscription.add(
-      combineLatest([this.configuration$, this.breakpoint$]).pipe(
-        map(([configuration, breakpoint]) => ({configuration, breakpoint}))
+      combineLatest([this.channels$, this.breakpoint$]).pipe(
+        map(([channels, breakpoint]) => ({channels, breakpoint}))
       ).subscribe(pair => {
-        const channels = pair.configuration.twitch.channels;
+        const channels = pair.channels;
         this.sizedChannels = channels.map(((value, index) => this.setCardAndVideoSize(value, index, pair.breakpoint.matches)));
       }));
   }
 
   ngOnDestroy() {
     this._subscription.unsubscribe();
+  }
+
+  /**
+   * Pin a new channel - only the last 2 channels pinned are kept.
+   * After the pinned channels are calculated, sort and re-emit the ordered channels.
+   *
+   * @param channel to pin
+   */
+  pin(channel: string) {
+    const index = this._pinnedChannels.indexOf(channel);
+    if (index > -1) {
+      // remove the item from the pinned channels
+      this._pinnedChannels.splice(index, 1);
+    } else {
+      // add the channel to the front of the array
+      this._pinnedChannels = [channel, ...this._pinnedChannels.slice(0, 1)];
+    }
+    const sortedChannels = [...this.sizedChannels]
+      .map(value => value.channel)
+      .sort((a, b) => this.weightOfPin(b) - this.weightOfPin(a));
+    this.channels$.next(sortedChannels);
+  }
+
+  /**
+   * translate a place in the pinned channels array to a weight for the card location on the screen.
+   * @param channel to calculate the weight of.
+   */
+  private weightOfPin(channel: string): number {
+    const index = this._pinnedChannels.indexOf(channel);
+    switch (index) {
+      case (0):
+        return 2;
+      case(1):
+        return 1;
+      default:
+        return 0;
+    }
+  }
+
+  /**
+   * Returns the correct ThemePalette for if the channel is pinned or not
+   * @param channel to check if it is pinned.
+   */
+  isPinned(channel: string): ThemePalette {
+    return this._pinnedChannels.indexOf(channel) > -1 ? 'accent' : undefined;
   }
 
   /**
@@ -59,15 +107,13 @@ export class TwitchDashboardComponent implements OnInit, OnDestroy {
    * @param isSmallScreen - whether or not we are on a phone
    */
   setCardAndVideoSize(channel: string, index: number, isSmallScreen: boolean): TwitchCardMeasurements {
-    let cols: 1 | 2 | 3;
-    let rows: 1 | 2;
+    let cols: Column;
+    let rows: Row;
 
     if (isSmallScreen) {
-      cols = 3;
-      rows = 1;
+      [cols, rows] = [6, 2];
     } else {
-      cols = index === 0 ? 3 : 1;
-      rows = index === 0 ? 2 : 1;
+      [cols, rows] = this.calculateCardSizeForDesktop(index);
     }
 
     return {
@@ -75,6 +121,21 @@ export class TwitchDashboardComponent implements OnInit, OnDestroy {
       cols,
       rows
     };
+  }
+
+  /**
+   *
+   * @param index of the current card
+   * @returns the column and row calculation for this card
+   */
+  calculateCardSizeForDesktop(index: number): [Column, Row] {
+    const multiPins = this._pinnedChannels.length > 1;
+
+    if (multiPins) {
+      return (index < 2) ? [3, 3] : [2, 2];
+    } else {
+      return (index < 1) ? [6, 4] : [2, 2];
+    }
   }
 
 }

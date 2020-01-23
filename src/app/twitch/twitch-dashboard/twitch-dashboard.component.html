@@ -1,9 +1,11 @@
 <div class="grid-container">
-  <mat-grid-list cols="3" rowHeight="375px">
+  <mat-grid-list cols="6" rowHeight="187.5px">
     <mat-grid-tile *ngFor="let channel of sizedChannels" [colspan]="channel.cols" [rowspan]="channel.rows">
       <mat-card class="dashboard-card">
-        <mat-card-title>
-          {{channel.channel}}
+        <mat-card-title class="card-title">
+          <span>{{channel.channel}}</span>
+          <span class="empty-space"></span>
+          <span><mat-icon [color]="isPinned(channel.channel)" (click)="pin(channel.channel)">star</mat-icon></span>
         </mat-card-title>
         <mat-card-content class="video-content">
           <app-live-video [channel]="channel.channel"></app-live-video>

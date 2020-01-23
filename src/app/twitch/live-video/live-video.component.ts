@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, SecurityContext} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnInit, SecurityContext, ViewChild} from '@angular/core';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 
 @Component({
@@ -11,11 +11,12 @@ export class LiveVideoComponent implements OnInit {
   public safeUrl: SafeResourceUrl;
   @Input()
   public channel: string;
-  public height = 300;
-  // maintain a 3:4 ratio
-  public width = (this.height * 4) / 3;
 
-  constructor(private _domSanitizer: DomSanitizer) {
+  @ViewChild('twitchContainer', {static: false})
+  public twitchContainer: ElementRef;
+
+  constructor(private _domSanitizer: DomSanitizer,
+              private _changeDetectorRef: ChangeDetectorRef) {
   }
 
   ngOnInit() {
@@ -25,5 +26,4 @@ export class LiveVideoComponent implements OnInit {
       this._domSanitizer.sanitize(SecurityContext.URL, `https://player.twitch.tv/?channel=${this.channel}&muted=true`)
     );
   }
-
 }

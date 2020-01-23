@@ -7,7 +7,13 @@
   "twitch": {
     "display": true,
     "channels": [
-      "NGeniusGaming"
+      "NGeniusGaming",
+      "CD_Mangaka",
+      "Dashr40",
+      "ICrazyJI",
+      "SetTopVox",
+      "RealSponge",
+      "studmanny"
     ]
   }
 }

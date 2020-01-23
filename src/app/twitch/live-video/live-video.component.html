@@ -1,13 +1,11 @@
-<mat-card class="live-video-card">
-  <mat-card-title class="card-title">{{channel}}</mat-card-title>
-  <mat-card-content class="embedded-video">
-    <iframe
-      [src]="safeUrl"
-      height="{{height}}"
-      width="{{width}}"
-      frameborder="0"
-      scrolling="no"
-      allowfullscreen="false">
-    </iframe>
-  </mat-card-content>
-</mat-card>
+<div #twitchContainer
+     class="twitch-iframe-container">
+  <iframe
+    [src]="safeUrl"
+    height="95%"
+    width="100%"
+    frameborder="0"
+    scrolling="no"
+    allowfullscreen="false">
+  </iframe>
+</div>

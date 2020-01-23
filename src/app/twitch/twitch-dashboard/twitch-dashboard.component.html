@@ -1,3 +1,14 @@
-<ng-container *ngFor="let channel of channels">
-  <app-live-video [channel]="channel"></app-live-video>
-</ng-container>
+<div class="grid-container">
+  <mat-grid-list cols="3" rowHeight="375px">
+    <mat-grid-tile *ngFor="let channel of sizedChannels" [colspan]="channel.cols" [rowspan]="channel.rows">
+      <mat-card class="dashboard-card">
+        <mat-card-title>
+          {{channel.channel}}
+        </mat-card-title>
+        <mat-card-content class="video-content">
+          <app-live-video [channel]="channel.channel"></app-live-video>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

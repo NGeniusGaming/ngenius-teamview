@@ -141,21 +141,24 @@ $mat-dark-theme-background: (
 @include mat-core($fontConfig);
 
 // Theme Config
-
+$primary-color: #262c42;
+$primary-lighter-color: #bec0c6;
+$primary-darker-color: #171b2b;
 body {
-  --primary-color: #262c42;
-  --primary-lighter-color: #bec0c6;
-  --primary-darker-color: #171b2b;
+  --primary-color: $primary-color;
+  --primary-lighter-color: $primary-lighter-color;
+  --primary-darker-color: $primary-darker-color;
   --text-primary-color: #{$light-primary-text};
   --text-primary-lighter-color: #{$dark-primary-text};
   --text-primary-darker-color: #{$light-primary-text};
 }
 
+
 $mat-primary: (
-  main: #262c42,
-  lighter: #bec0c6,
-  darker: #171b2b,
-  200: #262c42, // For slide toggle,
+  main: $primary-color,
+  lighter: $primary-lighter-color,
+  darker: $primary-darker-color,
+  200: $primary-color, // For slide toggle,
   contrast : (
     main: $light-primary-text,
     lighter: $dark-primary-text,
@@ -164,20 +167,24 @@ $mat-primary: (
 );
 $theme-primary: mat-palette($mat-primary, main, lighter, darker);
 
+$accent-color: #ffc61c;
+$accent-lighter-color: #ffeebb;
+$accent-darker-color: #ffb111;
+
 body {
-  --accent-color: #ffc61c;
-  --accent-lighter-color: #ffeebb;
-  --accent-darker-color: #ffb111;
+  --accent-color: $accent-color;
+  --accent-lighter-color: $accent-lighter-color;
+  --accent-darker-color: $accent-darker-color;
   --text-accent-color: #{$dark-primary-text};
   --text-accent-lighter-color: #{$dark-primary-text};
   --text-accent-darker-color: #{$dark-primary-text};
 }
 
 $mat-accent: (
-  main: #ffc61c,
-  lighter: #ffeebb,
-  darker: #ffb111,
-  200: #ffc61c, // For slide toggle,
+  main: $accent-color,
+  lighter: $accent-lighter-color,
+  darker: $accent-darker-color,
+  200: $accent-color, // For slide toggle,
   contrast : (
     main: $dark-primary-text,
     lighter: $dark-primary-text,
@@ -186,20 +193,23 @@ $mat-accent: (
 );
 $theme-accent: mat-palette($mat-accent, main, lighter, darker);
 
+$warn-color: #ff0000;
+$warn-lighter-color: #ffb3b3;
+$warn-darker-color: #ff0000;
 body {
-  --warn-color: #ff0000;
-  --warn-lighter-color: #ffb3b3;
-  --warn-darker-color: #ff0000;
+  --warn-color: $warn-color;
+  --warn-lighter-color:$warn-lighter-color;
+  --warn-darker-color: $warn-darker-color;
   --text-warn-color: #{$light-primary-text};
   --text-warn-lighter-color: #{$dark-primary-text};
   --text-warn-darker-color: #{$light-primary-text};
 }
 
 $mat-warn: (
-  main: #ff0000,
-  lighter: #ffb3b3,
-  darker: #ff0000,
-  200: #ff0000, // For slide toggle,
+  main: $warn-color,
+  lighter: $warn-lighter-color,
+  darker: $warn-darker-color,
+  200: $warn-color, // For slide toggle,
   contrast : (
     main: $light-primary-text,
     lighter: $dark-primary-text,

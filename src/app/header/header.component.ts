@@ -1,9 +1,11 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, Output,EventEmitter} from '@angular/core';
 import {ConfigurationService} from '../config/configuration.service';
 import {Subscription} from 'rxjs';
 import {Configuration} from '../config/configuration.model';
 import {NavigationEnd, Router} from '@angular/router';
 import {filter, map} from 'rxjs/operators';
+import {ShowOfflineService} from './../show-offline.service'
+import { MatSlideToggleChange } from '@angular/material';
 
 @Component({
   selector: 'app-header',
@@ -11,13 +13,17 @@ import {filter, map} from 'rxjs/operators';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+  showOffline = true;
+  color = 'accent';
+  checked = this.showOffline;
+  disabled = false;
 
   public configuration: Configuration;
-
   private _subscription: Subscription = new Subscription();
   private _activeTab: Map<string, boolean> = new Map<string, boolean>([['twitch', false]]);
 
-  constructor(private _configurationService: ConfigurationService, private _router: Router) { }
+  constructor(private _configurationService: ConfigurationService, private _router: Router,
+              private _showOfflineService: ShowOfflineService) { }
 
   ngOnInit() {
     this._subscription.add(
@@ -33,6 +39,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
           map(value => value as NavigationEnd)
         ).subscribe(navigation => this.navigationEnd(navigation))
     );
+    this._showOfflineService.sendMessage(this.showOffline);
   }
 
   ngOnDestroy() {
@@ -61,5 +68,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     // update the now active tab.
     this._activeTab.set(newActive, true);
   }
-
+  onToggleChange($event: MatSlideToggleChange) {
+    this._showOfflineService.sendMessage(this.showOffline);
+    console.log(this.showOffline);
+  }
 }

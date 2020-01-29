@@ -144,6 +144,7 @@ $mat-dark-theme-background: (
 $primary-color: #262c42;
 $primary-lighter-color: #bec0c6;
 $primary-darker-color: #171b2b;
+
 body {
   --primary-color: $primary-color;
   --primary-lighter-color: $primary-lighter-color;
@@ -196,6 +197,7 @@ $theme-accent: mat-palette($mat-accent, main, lighter, darker);
 $warn-color: #ff0000;
 $warn-lighter-color: #ffb3b3;
 $warn-darker-color: #ff0000;
+
 body {
   --warn-color: $warn-color;
   --warn-lighter-color:$warn-lighter-color;

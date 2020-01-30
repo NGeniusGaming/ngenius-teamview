@@ -26,9 +26,3 @@
   -moz-box-shadow: 0 2px 2px;
   box-shadow: 0 2px 2px;
 }
-
-/* This fills the remaining space, by using flexbox.
-   Every toolbar row uses a flexbox row layout. */
-.fill-remaining-space {
-  flex: 1 1 auto;
-}

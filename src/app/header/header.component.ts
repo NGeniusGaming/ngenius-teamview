@@ -1,11 +1,11 @@
-import {Component, OnDestroy, OnInit, Output,EventEmitter} from '@angular/core';
+import {Component, OnDestroy, OnInit, Output, EventEmitter} from '@angular/core';
 import {ConfigurationService} from '../config/configuration.service';
 import {Subscription} from 'rxjs';
 import {Configuration} from '../config/configuration.model';
 import {NavigationEnd, Router} from '@angular/router';
 import {filter, map} from 'rxjs/operators';
-import {ShowOfflineService} from './../show-offline.service'
-import { MatSlideToggleChange } from '@angular/material';
+import {MatSlideToggleChange, ThemePalette} from '@angular/material';
+import {TwitchService} from '../twitch/twitch.service';
 
 @Component({
   selector: 'app-header',
@@ -13,17 +13,18 @@ import { MatSlideToggleChange } from '@angular/material';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  showOffline = true;
-  color = 'accent';
-  checked = this.showOffline;
+  color: ThemePalette = 'accent';
   disabled = false;
+  twitchOfflineChecked = true;
 
   public configuration: Configuration;
   private _subscription: Subscription = new Subscription();
   private _activeTab: Map<string, boolean> = new Map<string, boolean>([['twitch', false]]);
 
-  constructor(private _configurationService: ConfigurationService, private _router: Router,
-              private _showOfflineService: ShowOfflineService) { }
+  constructor(private _configurationService: ConfigurationService,
+              private _router: Router,
+              private _twitchService: TwitchService) {
+  }
 
   ngOnInit() {
     this._subscription.add(
@@ -39,7 +40,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
           map(value => value as NavigationEnd)
         ).subscribe(navigation => this.navigationEnd(navigation))
     );
-    this._showOfflineService.sendMessage(this.showOffline);
+
+    this._subscription.add(
+      this._twitchService
+        .showingOfflineStreams()
+        .subscribe(next => this.twitchOfflineChecked = next)
+    );
   }
 
   ngOnDestroy() {
@@ -52,6 +58,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
    */
   public isActive(expectedUrl: string): boolean {
     return this._activeTab.get(expectedUrl);
+  }
+
+  public onToggleChange(event: MatSlideToggleChange) {
+    this._twitchService.showOfflineStreamsToggle(event);
   }
 
   /**
@@ -67,9 +77,5 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
     // update the now active tab.
     this._activeTab.set(newActive, true);
-  }
-  onToggleChange($event: MatSlideToggleChange) {
-    this._showOfflineService.sendMessage(this.showOffline);
-    console.log(this.showOffline);
   }
 }

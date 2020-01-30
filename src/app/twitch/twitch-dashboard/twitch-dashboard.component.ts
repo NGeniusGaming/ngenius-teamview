@@ -4,7 +4,6 @@ import {BehaviorSubject, combineLatest, Observable, Subscription, from} from 'rx
 import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/layout';
 import {map} from 'rxjs/operators';
 import {ThemePalette} from '@angular/material';
-import {ShowOfflineService} from '../../show-offline.service';
 
 type Column = 1 | 2 | 3 | 4 | 5 | 6;
 type Row = 1 | 2 | 3 | 4;
@@ -21,7 +20,7 @@ interface TwitchCardMeasurements {
   styleUrls: ['./twitch-dashboard.component.scss']
 })
 export class TwitchDashboardComponent implements OnInit, OnDestroy {
-  showOffline: any;
+
   public sizedChannels: TwitchCardMeasurements[];
 
   private _subscription = new Subscription();
@@ -31,9 +30,8 @@ export class TwitchDashboardComponent implements OnInit, OnDestroy {
   private channels$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
   private breakpoint$: Observable<BreakpointState>;
 
-  constructor(private _configurationService: ConfigurationService, private _breakpointObserver: BreakpointObserver,
-              private _showOfflineService: ShowOfflineService) {
-                this.showOffline = this._showOfflineService.getMessage();
+  constructor(private _configurationService: ConfigurationService,
+              private _breakpointObserver: BreakpointObserver) {
   }
 
   ngOnInit() {
@@ -140,5 +138,5 @@ export class TwitchDashboardComponent implements OnInit, OnDestroy {
       return (index < 1) ? [6, 4] : [2, 2];
     }
   }
-  
+
 }

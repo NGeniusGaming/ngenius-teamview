@@ -20,19 +20,16 @@
             mat-button>Twitch
     </button>
     <span class="fill-remaining-space"></span>
-    <span>
-    <div class="md-toolbar-tools">
-      <section class="example-section">
+    <span *ngIf="isActive('twitch')"
+      class="md-toolbar-tools">
         <mat-slide-toggle
-            class="example-margin"
-            [color]="color"
-            [checked]="checked"
-            [disabled]="disabled"
-            (change)="onToggleChange($event)">
+          class="example-margin"
+          [color]="color"
+          [checked]="twitchOfflineChecked"
+          [disabled]="disabled"
+          (change)="onToggleChange($event)">
           Show Offline Streams
         </mat-slide-toggle>
-      </section>
-    </div>
   </span>
   </mat-toolbar-row>
 </mat-toolbar>

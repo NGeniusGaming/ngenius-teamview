@@ -28,12 +28,7 @@ export interface ChatCardMeasurments {
 export class TwitchDashboardComponent implements OnInit, OnDestroy {
 
   public sizedChannels: TwitchCardMeasurements[];
-
-  chatCardTiles: ChatCardMeasurments[] = [
-    {gridName: 'video', cols: 3, rows: 2},
-    {gridName: 'chat', cols: 1, rows: 2}
-  ];
-
+  
   private _subscription = new Subscription();
 
   private _pinnedChannels: string[] = [];

@@ -1,9 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ConfigurationService} from '../../config/configuration.service';
-import {BehaviorSubject, combineLatest, Observable, Subscription} from 'rxjs';
+import {combineLatest, Observable, Subscription} from 'rxjs';
 import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/layout';
 import {map} from 'rxjs/operators';
 import {ThemePalette} from '@angular/material';
+import {TwitchService} from '../twitch.service';
 
 type Column = 1 | 2 | 3 | 4 | 5 | 6;
 type Row = 1 | 2 | 3 | 4;
@@ -27,26 +28,27 @@ export class TwitchDashboardComponent implements OnInit, OnDestroy {
 
   private _pinnedChannels: string[] = [];
 
-  private channels$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
   private breakpoint$: Observable<BreakpointState>;
 
-  constructor(private _configurationService: ConfigurationService, private _breakpointObserver: BreakpointObserver) {
+  constructor(private _configurationService: ConfigurationService,
+              private _twitchService: TwitchService,
+              private _breakpointObserver: BreakpointObserver) {
   }
 
   ngOnInit() {
-    this._subscription.add(
-      this._configurationService.configuration().pipe(
-        map(value => value.twitch.channels)
-      ).subscribe(value => this.channels$.next(value)));
 
     this.breakpoint$ = this._breakpointObserver.observe(Breakpoints.Handset);
 
     this._subscription.add(
-      combineLatest([this.channels$, this.breakpoint$]).pipe(
+      combineLatest([this._twitchService.channels(), this.breakpoint$]).pipe(
         map(([channels, breakpoint]) => ({channels, breakpoint}))
       ).subscribe(pair => {
         const channels = pair.channels;
-        this.sizedChannels = channels.map(((value, index) => this.setCardAndVideoSize(value, index, pair.breakpoint.matches)));
+        const newSizedChannels = channels.map(((value, index) => this.setCardAndVideoSize(value, index, pair.breakpoint.matches)));
+        if (JSON.stringify(this.sizedChannels) !== JSON.stringify(newSizedChannels)) {
+          // if the sized channels have changed in some way, re-set them, which causes them to reload.
+          this.sizedChannels = newSizedChannels;
+        }
       }));
   }
 
@@ -72,7 +74,7 @@ export class TwitchDashboardComponent implements OnInit, OnDestroy {
     const sortedChannels = [...this.sizedChannels]
       .map(value => value.channel)
       .sort((a, b) => this.weightOfPin(b) - this.weightOfPin(a));
-    this.channels$.next(sortedChannels);
+    this._twitchService.reorderedChannels(sortedChannels);
   }
 
   /**

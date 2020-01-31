@@ -8,10 +8,16 @@ import {ThemePalette} from '@angular/material';
 type Column = 1 | 2 | 3 | 4 | 5 | 6;
 type Row = 1 | 2 | 3 | 4;
 
+
 interface TwitchCardMeasurements {
   readonly channel: string;
   readonly cols: Column;
   readonly rows: Row;
+}
+export interface ChatCardMeasurments {
+  gridName: string;
+  cols: number;
+  rows: number;
 }
 
 @Component({
@@ -22,6 +28,11 @@ interface TwitchCardMeasurements {
 export class TwitchDashboardComponent implements OnInit, OnDestroy {
 
   public sizedChannels: TwitchCardMeasurements[];
+
+  chatCardTiles: ChatCardMeasurments[] = [
+    {gridName: 'video', cols: 3, rows: 2},
+    {gridName: 'chat', cols: 1, rows: 2}
+  ];
 
   private _subscription = new Subscription();
 

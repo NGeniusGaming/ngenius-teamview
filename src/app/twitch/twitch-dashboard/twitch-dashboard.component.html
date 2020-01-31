@@ -8,7 +8,8 @@
           <span><mat-icon [color]="isPinned(channel.channel)" (click)="pin(channel.channel)">star</mat-icon></span>
         </mat-card-title>
         <mat-card-content class="video-content">
-          <app-live-video [channel]="channel.channel"></app-live-video>
+          <div *ngIf="isPinned(channel.channel)" class="video-content"><app-chat-window [channel]="channel.channel"></app-chat-window></div>
+          <div *ngIf="!isPinned(channel.channel)" class="video-content"><app-live-video [channel]="channel.channel"></app-live-video></div>
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>

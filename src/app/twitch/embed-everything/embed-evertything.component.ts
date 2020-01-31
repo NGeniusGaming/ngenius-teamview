@@ -1,12 +1,14 @@
 import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnInit, SecurityContext, ViewChild} from '@angular/core';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
+declare const Twitch: any;
 
 @Component({
-  selector: 'app-live-video',
-  templateUrl: './live-video.component.html',
-  styleUrls: ['./live-video.component.scss']
+  selector: 'app-chat-window',
+  templateUrl: './embed-everything.component.html',
+  styleUrls: ['./embed-everything.component.scss']
 })
-export class LiveVideoComponent implements OnInit {
+
+export class EmbedEverythingComonent implements OnInit {
 
   public safeUrl: SafeResourceUrl;
   @Input()
@@ -20,10 +22,12 @@ export class LiveVideoComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Make the resource a {SafeResourceUrl}
-    this.safeUrl = this._domSanitizer.bypassSecurityTrustResourceUrl(
-      // guarantee there are no XSS attacks
-      this._domSanitizer.sanitize(SecurityContext.URL, `https://player.twitch.tv/?channel=${this.channel}&muted=true`)
-    );
+    const options = {
+      width: '100%',
+      height: '100%',
+      channel: this.channel
+    };
+    const player = new Twitch.Embed('pinned-channel', options);
+    player.setVolume(0.5);
   }
 }

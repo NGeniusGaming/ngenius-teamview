@@ -14,6 +14,7 @@ import {MatButtonModule,
    MatSlideToggleModule} from '@angular/material';
 import { LiveVideoComponent } from './twitch/live-video/live-video.component';
 import { TwitchDashboardComponent } from './twitch/twitch-dashboard/twitch-dashboard.component';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { TwitchDashboardComponent } from './twitch/twitch-dashboard/twitch-dashb
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,

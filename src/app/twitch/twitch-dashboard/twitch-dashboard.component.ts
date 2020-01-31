@@ -44,7 +44,11 @@ export class TwitchDashboardComponent implements OnInit, OnDestroy {
         map(([channels, breakpoint]) => ({channels, breakpoint}))
       ).subscribe(pair => {
         const channels = pair.channels;
-        this.sizedChannels = channels.map(((value, index) => this.setCardAndVideoSize(value, index, pair.breakpoint.matches)));
+        const newSizedChannels = channels.map(((value, index) => this.setCardAndVideoSize(value, index, pair.breakpoint.matches)));
+        if (JSON.stringify(this.sizedChannels) !== JSON.stringify(newSizedChannels)) {
+          // if the sized channels have changed in some way, re-set them, which causes them to reload.
+          this.sizedChannels = newSizedChannels;
+        }
       }));
   }
 

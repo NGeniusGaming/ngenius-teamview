@@ -3,6 +3,12 @@ import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
 import {MatSlideToggleChange} from '@angular/material';
 import {ConfigurationService} from '../config/configuration.service';
 import {map} from 'rxjs/operators';
+import {interval} from 'rxjs';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {TwitchServiceConfiguration} from '../config/configuration.model';
+import {EMPTY_TWITCH_STREAMS, TwitchStreamsResponse} from './api/twitch-streams.model';
+
+export const REFRESH_MINUTES = 1;
 
 @Injectable({
   providedIn: 'root'
@@ -11,11 +17,33 @@ export class TwitchService {
 
   private _showingOfflineStreams: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   private _channels: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
+  private _twitchConfig: BehaviorSubject<TwitchServiceConfiguration> = new BehaviorSubject<TwitchServiceConfiguration>(null);
+  private _twitchApiResults: BehaviorSubject<TwitchStreamsResponse> = new BehaviorSubject<TwitchStreamsResponse>(EMPTY_TWITCH_STREAMS);
+  // this allows us to refresh the live channels once per minute.
+  private _refreshTimer: Observable<Date> = interval(REFRESH_MINUTES * 60 * 1000).pipe(map(_ => new Date(Date.now())));
 
-  constructor(private _configurationService: ConfigurationService) {
+  constructor(private _configurationService: ConfigurationService,
+              private _httpClient: HttpClient) {
     this._configurationService.configuration().pipe(
-      map(value => value.twitch.channels)
-    ).subscribe(value => this._channels.next(value));
+      map(value => value.twitch)
+    ).subscribe(value => {
+      this._twitchConfig.next(value);
+      this._channels.next(value.channels);
+    });
+
+    combineLatest([this._twitchConfig, this._channels, this._refreshTimer]).pipe(
+      map(([twitchConfig, channels, refreshTime]) => ({twitchConfig, channels, refreshTime}))
+    ).subscribe(value => {
+      console.log('Refreshing at %o', value.refreshTime);
+      const queryParams = value.channels.map(channel => `user_login=${channel}`).join('&');
+      console.log(`requesting https://api.twitch.tv/helix/streams?${queryParams}`);
+      this._httpClient.get<TwitchStreamsResponse>(`https://api.twitch.tv/helix/streams?${queryParams}`, {
+        headers: new HttpHeaders({
+          'Client-ID': value.twitchConfig.clientId
+        })
+      })
+        .subscribe((res: TwitchStreamsResponse) => this._twitchApiResults.next(res));
+    });
   }
 
   /**
@@ -37,8 +65,8 @@ export class TwitchService {
   }
 
   public channels(): Observable<string[]> {
-    return combineLatest([this._channels, this._showingOfflineStreams]).pipe(
-      map(([channels, isShowingOfflineStreams]) => ({channels, isShowingOfflineStreams})),
+    return combineLatest([this._channels, this._showingOfflineStreams, this._twitchApiResults]).pipe(
+      map(([channels, isShowingOfflineStreams, streams]) => ({channels, isShowingOfflineStreams, streams})),
       map(this._reducedChannels)
     );
   }
@@ -47,10 +75,16 @@ export class TwitchService {
     this._channels.next(channels);
   }
 
-  private _reducedChannels(combined: { channels: string[], isShowingOfflineStreams: boolean }): string[] {
-    // TODO: we should do something with the fact that we are showing offline streams here
-    // BUT: we need to merge this with the twitch API at this point.
-    console.log(combined.channels);
-    return combined.channels;
+  private _reducedChannels(combined: { channels: string[], isShowingOfflineStreams: boolean, streams: TwitchStreamsResponse }): string[] {
+    if (combined.isShowingOfflineStreams) {
+      // all channels from config
+      return combined.channels;
+    } else {
+      // just ones we received from the twitch api - which only returns the stream if it is live
+      const onlineStreams = combined.streams.data;
+      const onlineStreamNames = onlineStreams.map(stream => stream.user_name.toLowerCase());
+
+      return combined.channels.filter(value => onlineStreamNames.includes(value.toLowerCase()));
+    }
   }
 }

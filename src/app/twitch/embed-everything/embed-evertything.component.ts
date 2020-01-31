@@ -3,14 +3,12 @@ import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 declare const Twitch: any;
 
 @Component({
-  selector: 'app-chat-window',
+  selector: 'app-embeded-window',
   templateUrl: './embed-everything.component.html',
   styleUrls: ['./embed-everything.component.scss']
 })
 
-export class EmbedEverythingComonent implements OnInit {
-
-  public safeUrl: SafeResourceUrl;
+export class EmbedEverythingComponent implements OnInit {
   @Input()
   public channel: string;
 
@@ -27,7 +25,7 @@ export class EmbedEverythingComonent implements OnInit {
       height: '100%',
       channel: this.channel
     };
-    const player = new Twitch.Embed('pinned-channel', options);
+    const player = new Twitch.Embed(this.channel, options);
     player.setVolume(0.5);
   }
 }

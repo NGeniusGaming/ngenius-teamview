@@ -7,14 +7,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './header/header.component';
 import {MatButtonModule, MatCardModule, MatGridListModule, MatIconModule, MatToolbarModule, MatTooltipModule} from '@angular/material';
 import { LiveVideoComponent } from './twitch/live-video/live-video.component';
-import { EmbedEverythingComonent } from './twitch/embed-everything/embed-evertything.component';
+import { EmbedEverythingComponent } from './twitch/embed-everything/embed-evertything.component';
 import { TwitchDashboardComponent } from './twitch/twitch-dashboard/twitch-dashboard.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    EmbedEverythingComonent,
+    EmbedEverythingComponent,
     LiveVideoComponent,
     TwitchDashboardComponent
   ],

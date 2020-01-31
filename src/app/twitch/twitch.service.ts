@@ -34,9 +34,7 @@ export class TwitchService {
     combineLatest([this._twitchConfig, this._channels, this._refreshTimer]).pipe(
       map(([twitchConfig, channels, refreshTime]) => ({twitchConfig, channels, refreshTime}))
     ).subscribe(value => {
-      console.log('Refreshing at %o', value.refreshTime);
       const queryParams = value.channels.map(channel => `user_login=${channel}`).join('&');
-      console.log(`requesting https://api.twitch.tv/helix/streams?${queryParams}`);
       this._httpClient.get<TwitchStreamsResponse>(`https://api.twitch.tv/helix/streams?${queryParams}`, {
         headers: new HttpHeaders({
           'Client-ID': value.twitchConfig.clientId

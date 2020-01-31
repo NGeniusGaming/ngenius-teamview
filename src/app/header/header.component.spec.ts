@@ -1,12 +1,14 @@
-import {async, ComponentFixture, fakeAsync, TestBed} from '@angular/core/testing';
+import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
-import { HeaderComponent } from './header.component';
+import {HeaderComponent} from './header.component';
 import {MatSlideToggleModule, MatToolbarModule, MatTooltipModule} from '@angular/material';
 import {RouterTestingModule} from '@angular/router/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ConfigurationService} from '../config/configuration.service';
 import {Configuration} from '../config/configuration.model';
 import {first} from 'rxjs/operators';
+import {TwitchService} from '../twitch/twitch.service';
+import {MockTwitchService} from '../test/mocks/twitch-service.mock.spec';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -17,7 +19,10 @@ describe('HeaderComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [MatTooltipModule, MatToolbarModule, RouterTestingModule, MatSlideToggleModule, HttpClientTestingModule],
-      declarations: [ HeaderComponent ]
+      declarations: [HeaderComponent],
+      providers: [
+        {provide: TwitchService, useValue: MockTwitchService}
+      ]
     })
       .compileComponents();
   }));

@@ -3,6 +3,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {TwitchDashboardComponent} from './twitch-dashboard.component';
 import {LiveVideoComponent} from '../live-video/live-video.component';
 import {MatCardModule, MatGridListModule, MatIconModule} from '@angular/material';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('TwitchDashboardComponent', () => {
   let component: TwitchDashboardComponent;
@@ -10,7 +11,7 @@ describe('TwitchDashboardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [MatCardModule, MatGridListModule, MatIconModule],
+      imports: [MatCardModule, MatGridListModule, MatIconModule, HttpClientTestingModule],
       declarations: [TwitchDashboardComponent, LiveVideoComponent]
     })
       .compileComponents();

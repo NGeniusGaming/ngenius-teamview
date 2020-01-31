@@ -19,6 +19,7 @@ export interface RootConfiguration {
  */
 export interface TwitchServiceConfiguration extends BaseServiceConfiguration {
   readonly channels: string[];
+  readonly clientId: string;
 }
 
 /**

@@ -14,10 +14,23 @@
           class="application-title">
       {{configuration.root.applicationTitle}}</span>
     <button id="twitch-header-btn"
+            style="visibility: hidden;"
             class="service-provider-btn"
             [ngClass]="{'tab-is-active': isActive('twitch')}"
             *ngIf="configuration.twitch.display"
             mat-button>Twitch
     </button>
+    <span class="fill-remaining-space"></span>
+    <span *ngIf="isActive('twitch')"
+      class="md-toolbar-tools">
+        <mat-slide-toggle
+          class="example-margin"
+          [color]="color"
+          [checked]="twitchOfflineChecked"
+          [disabled]="disabled"
+          (change)="onToggleChange($event)">
+          Show Offline Streams
+        </mat-slide-toggle>
+  </span>
   </mat-toolbar-row>
 </mat-toolbar>

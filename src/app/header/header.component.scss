@@ -1,5 +1,6 @@
 .application-logo {
   margin-right: 0.1em;
+
   img {
     padding-top: 8px;
     object-fit: cover;
@@ -21,7 +22,7 @@
 
 .tab-is-active {
   border-bottom: 0.05em solid;
-  -webkit-box-shadow:0 2px 2px;
-  -moz-box-shadow:0 2px 2px;
-  box-shadow:0 2px 2px;
+  -webkit-box-shadow: 0 2px 2px;
+  -moz-box-shadow: 0 2px 2px;
+  box-shadow: 0 2px 2px;
 }

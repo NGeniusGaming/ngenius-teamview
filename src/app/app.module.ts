@@ -13,7 +13,7 @@ import {MatButtonModule,
    MatTooltipModule,
    MatSlideToggleModule} from '@angular/material';
 import { LiveVideoComponent } from './twitch/live-video/live-video.component';
-import { EmbedEverythingComponent } from './twitch/embed-everything/embed-evertything.component';
+import { EmbedEverythingComponent } from './twitch/embed-everything/embed-everything.component';
 import { TwitchDashboardComponent } from './twitch/twitch-dashboard/twitch-dashboard.component';
 import {HttpClientModule} from '@angular/common/http';
 

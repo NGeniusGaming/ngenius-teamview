@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EmbedEverythingComponent } from './embed-everything.component';
+import { TwitchVideoChatComponent } from './twitch-video-chat.component';
 
 describe('EmbedEverythingComponent', () => {
-  let component: EmbedEverythingComponent;
-  let fixture: ComponentFixture<EmbedEverythingComponent>;
+  let component: TwitchVideoChatComponent;
+  let fixture: ComponentFixture<TwitchVideoChatComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EmbedEverythingComponent ]
+      declarations: [ TwitchVideoChatComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EmbedEverythingComponent);
+    fixture = TestBed.createComponent(TwitchVideoChatComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

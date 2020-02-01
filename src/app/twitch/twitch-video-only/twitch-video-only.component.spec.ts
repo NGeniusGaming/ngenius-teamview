@@ -1,22 +1,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LiveVideoComponent } from './live-video.component';
+import { TwitchVideoOnlyComponent } from './twitch-video-only.component';
 import {MatCardModule} from '@angular/material';
 
 describe('LiveVideoComponent', () => {
-  let component: LiveVideoComponent;
-  let fixture: ComponentFixture<LiveVideoComponent>;
+  let component: TwitchVideoOnlyComponent;
+  let fixture: ComponentFixture<TwitchVideoOnlyComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ MatCardModule ],
-      declarations: [ LiveVideoComponent ]
+      declarations: [ TwitchVideoOnlyComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LiveVideoComponent);
+    fixture = TestBed.createComponent(TwitchVideoOnlyComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

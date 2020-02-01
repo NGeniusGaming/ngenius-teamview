@@ -12,8 +12,8 @@ import {MatButtonModule,
    MatToolbarModule,
    MatTooltipModule,
    MatSlideToggleModule} from '@angular/material';
-import { LiveVideoComponent } from './twitch/live-video/live-video.component';
-import { EmbedEverythingComponent } from './twitch/embed-everything/embed-everything.component';
+import { TwitchVideoOnlyComponent } from './twitch/twitch-video-only/twitch-video-only.component';
+import { TwitchVideoChatComponent } from './twitch/twitch-video-chat/twitch-video-chat.component';
 import { TwitchDashboardComponent } from './twitch/twitch-dashboard/twitch-dashboard.component';
 import {HttpClientModule} from '@angular/common/http';
 
@@ -21,8 +21,8 @@ import {HttpClientModule} from '@angular/common/http';
   declarations: [
     AppComponent,
     HeaderComponent,
-    EmbedEverythingComponent,
-    LiveVideoComponent,
+    TwitchVideoChatComponent,
+    TwitchVideoOnlyComponent,
     TwitchDashboardComponent
   ],
   imports: [

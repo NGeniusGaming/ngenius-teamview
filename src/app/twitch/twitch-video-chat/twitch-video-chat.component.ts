@@ -4,12 +4,12 @@ import {DomSanitizer} from '@angular/platform-browser';
 declare const Twitch: any;
 
 @Component({
-  selector: 'app-embeded-window',
-  templateUrl: './embed-everything.component.html',
-  styleUrls: ['./embed-everything.component.scss']
+  selector: 'app-twitch-video-chat',
+  templateUrl: './twitch-video-chat.component.html',
+  styleUrls: ['./twitch-video-chat.component.scss']
 })
 
-export class EmbedEverythingComponent implements OnInit, AfterViewInit {
+export class TwitchVideoChatComponent implements OnInit, AfterViewInit {
   @Input()
   public channel: string;
 

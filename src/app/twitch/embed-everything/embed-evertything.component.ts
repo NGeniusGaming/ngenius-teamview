@@ -1,5 +1,6 @@
 import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnInit, SecurityContext, ViewChild} from '@angular/core';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
+
 declare const Twitch: any;
 
 @Component({
@@ -8,7 +9,7 @@ declare const Twitch: any;
   styleUrls: ['./embed-everything.component.scss']
 })
 
-export class EmbedEverythingComponent implements OnInit {
+export class EmbedEverythingComponent implements OnInit, AfterViewInit {
   @Input()
   public channel: string;
 
@@ -20,6 +21,10 @@ export class EmbedEverythingComponent implements OnInit {
   }
 
   ngOnInit() {
+
+  }
+
+  ngAfterViewInit() {
     const options = {
       width: '100%',
       height: '100%',

@@ -9,10 +9,17 @@ import {TwitchService} from '../twitch.service';
 type Column = 1 | 2 | 3 | 4 | 5 | 6;
 type Row = 1 | 2 | 3 | 4;
 
+
 interface TwitchCardMeasurements {
   readonly channel: string;
   readonly cols: Column;
   readonly rows: Row;
+}
+
+export interface ChatCardMeasurments {
+  gridName: string;
+  cols: number;
+  rows: number;
 }
 
 @Component({

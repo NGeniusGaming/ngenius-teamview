@@ -2,11 +2,11 @@ import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnInit, 
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-live-video',
-  templateUrl: './live-video.component.html',
-  styleUrls: ['./live-video.component.scss']
+  selector: 'app-twitch-video-only',
+  templateUrl: './twitch-video-only.component.html',
+  styleUrls: ['./twitch-video-only.component.scss']
 })
-export class LiveVideoComponent implements OnInit {
+export class TwitchVideoOnlyComponent implements OnInit {
 
   public safeUrl: SafeResourceUrl;
   @Input()

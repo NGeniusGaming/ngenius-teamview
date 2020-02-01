@@ -1,9 +1,10 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {TwitchDashboardComponent} from './twitch-dashboard.component';
-import {LiveVideoComponent} from '../live-video/live-video.component';
+import {TwitchVideoOnlyComponent} from '../twitch-video-only/twitch-video-only.component';
 import {MatCardModule, MatGridListModule, MatIconModule} from '@angular/material';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {TwitchVideoChatComponent} from '../twitch-video-chat/twitch-video-chat.component';
 
 describe('TwitchDashboardComponent', () => {
   let component: TwitchDashboardComponent;
@@ -12,7 +13,7 @@ describe('TwitchDashboardComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [MatCardModule, MatGridListModule, MatIconModule, HttpClientTestingModule],
-      declarations: [TwitchDashboardComponent, LiveVideoComponent]
+      declarations: [TwitchDashboardComponent, TwitchVideoOnlyComponent, TwitchVideoChatComponent]
     })
       .compileComponents();
   }));

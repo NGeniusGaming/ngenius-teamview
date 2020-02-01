@@ -4,7 +4,7 @@ import {TwitchDashboardComponent} from './twitch-dashboard.component';
 import {LiveVideoComponent} from '../live-video/live-video.component';
 import {MatCardModule, MatGridListModule, MatIconModule} from '@angular/material';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {EmbedEverythingComponent} from '../embed-everything/embed-evertything.component';
+import {EmbedEverythingComponent} from '../embed-everything/embed-everything.component';
 
 describe('TwitchDashboardComponent', () => {
   let component: TwitchDashboardComponent;

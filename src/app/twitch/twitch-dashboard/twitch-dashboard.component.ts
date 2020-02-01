@@ -15,6 +15,7 @@ interface TwitchCardMeasurements {
   readonly cols: Column;
   readonly rows: Row;
 }
+
 export interface ChatCardMeasurments {
   gridName: string;
   cols: number;
@@ -29,7 +30,7 @@ export interface ChatCardMeasurments {
 export class TwitchDashboardComponent implements OnInit, OnDestroy {
 
   public sizedChannels: TwitchCardMeasurements[];
-  
+
   private _subscription = new Subscription();
 
   private _pinnedChannels: string[] = [];

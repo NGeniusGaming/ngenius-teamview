@@ -20,10 +20,13 @@ export class TwitchService {
   private _twitchConfig: BehaviorSubject<TwitchServiceConfiguration> = new BehaviorSubject<TwitchServiceConfiguration>(null);
   private _twitchApiResults: BehaviorSubject<TwitchStreamsResponse> = new BehaviorSubject<TwitchStreamsResponse>(EMPTY_TWITCH_STREAMS);
   // this allows us to refresh the live channels once per minute.
-  private _refreshTimer: Observable<Date> = interval(REFRESH_MINUTES * 60 * 1000).pipe(map(_ => new Date(Date.now())));
+  private _refreshTimer: BehaviorSubject<Date> = new BehaviorSubject<Date>(new Date(Date.now()));
 
   constructor(private _configurationService: ConfigurationService,
               private _httpClient: HttpClient) {
+    interval(REFRESH_MINUTES * 60 * 1000)
+      .pipe(map(_ => new Date(Date.now())))
+      .subscribe(value => this._refreshTimer.next(value));
     this._configurationService.configuration().pipe(
       map(value => value.twitch)
     ).subscribe(value => {

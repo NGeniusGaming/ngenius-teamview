@@ -5,22 +5,7 @@ import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/lay
 import {map} from 'rxjs/operators';
 import {ThemePalette} from '@angular/material';
 import {TwitchService} from '../twitch.service';
-
-type Column = 1 | 2 | 3 | 4 | 5 | 6;
-type Row = 1 | 2 | 3 | 4;
-
-
-interface TwitchCardMeasurements {
-  readonly channel: string;
-  readonly cols: Column;
-  readonly rows: Row;
-}
-
-export interface ChatCardMeasurments {
-  gridName: string;
-  cols: number;
-  rows: number;
-}
+import {Column, Row, TwitchCardMeasurements} from './twitch-card-measurements.model';
 
 @Component({
   selector: 'app-twitch-dashboard',
@@ -29,7 +14,7 @@ export interface ChatCardMeasurments {
 })
 export class TwitchDashboardComponent implements OnInit, OnDestroy {
 
-  public sizedChannels: TwitchCardMeasurements[];
+  private sizedChannels: TwitchCardMeasurements[];
 
   private _subscription = new Subscription();
 
@@ -45,39 +30,43 @@ export class TwitchDashboardComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.breakpoint$ = this._breakpointObserver.observe(Breakpoints.Handset);
+    this._breakpointObserver.observe(Breakpoints.Handset).subscribe(v => console.log(v));
 
     this._subscription.add(
       combineLatest([this._twitchService.channels(), this.breakpoint$]).pipe(
         map(([channels, breakpoint]) => ({channels, breakpoint}))
       ).subscribe(pair => {
-        const channels = pair.channels;
+        console.log('test');
+        const channels = [...pair.channels];
         const newSizedChannels = channels.map(((value, index) => this.setCardAndVideoSize(value, index, pair.breakpoint.matches)));
-        if (channels.length !== newSizedChannels.length || JSON.stringify(this.sizedChannels) !== JSON.stringify(newSizedChannels)) {
+        if (JSON.stringify(this.sizedChannels) !== JSON.stringify(newSizedChannels)) {
           // if the sized channels have changed in some way, re-set them, which causes them to reload.
           this.sizedChannels = newSizedChannels;
+          this._resortChannels();
         }
       }));
+
   }
 
   ngOnDestroy() {
     this._subscription.unsubscribe();
   }
 
-  /**
-   * Pin a new channel - only the last 2 channels pinned are kept.
-   * After the pinned channels are calculated, sort and re-emit the ordered channels.
-   *
-   * @param channel to pin
-   */
-  pin(channel: string) {
-    const index = this._pinnedChannels.indexOf(channel);
+  public pin(channel: string) {
+    let currentPins = [...this._pinnedChannels];
+    const index = currentPins.indexOf(channel);
     if (index > -1) {
       // remove the item from the pinned channels
-      this._pinnedChannels.splice(index, 1);
+      currentPins.splice(index, 1);
     } else {
       // add the channel to the front of the array
-      this._pinnedChannels = [channel, ...this._pinnedChannels.slice(0, 1)];
+      currentPins = [channel, ...currentPins.slice(0, 1)];
     }
+    this._pinnedChannels = currentPins;
+    this._resortChannels();
+  }
+
+  private _resortChannels() {
     const sortedChannels = [...this.sizedChannels]
       .map(value => value.channel)
       .sort((a, b) => this.weightOfPin(b) - this.weightOfPin(a));

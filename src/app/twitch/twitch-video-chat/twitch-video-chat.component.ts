@@ -1,5 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
-import {DomSanitizer} from '@angular/platform-browser';
+import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 
 declare const Twitch: any;
 
@@ -16,8 +15,7 @@ export class TwitchVideoChatComponent implements OnInit, AfterViewInit {
   @ViewChild('twitchContainer', {static: false})
   public twitchContainer: ElementRef;
 
-  constructor(private _domSanitizer: DomSanitizer,
-              private _changeDetectorRef: ChangeDetectorRef) {
+  constructor() {
   }
 
   ngOnInit() {
@@ -25,12 +23,13 @@ export class TwitchVideoChatComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    console.log('channel %s', this.channel);
     const options = {
       width: '100%',
       height: '100%',
       channel: this.channel
     };
     const player = new Twitch.Embed(this.channel, options);
-    player.setVolume(0.5);
+    // player.setVolume(0.5);
   }
 }

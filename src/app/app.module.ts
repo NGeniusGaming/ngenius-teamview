@@ -16,6 +16,7 @@ import { TwitchVideoOnlyComponent } from './twitch/twitch-video-only/twitch-vide
 import { TwitchVideoChatComponent } from './twitch/twitch-video-chat/twitch-video-chat.component';
 import { TwitchDashboardComponent } from './twitch/twitch-dashboard/twitch-dashboard.component';
 import {HttpClientModule} from '@angular/common/http';
+import {TwitchService} from './twitch/twitch.service';
 
 @NgModule({
   declarations: [

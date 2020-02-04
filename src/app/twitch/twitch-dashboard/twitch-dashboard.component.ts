@@ -1,26 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ConfigurationService} from '../../config/configuration.service';
-import {combineLatest, Observable, Subscription} from 'rxjs';
+import {BehaviorSubject, combineLatest, Observable, Subscription} from 'rxjs';
 import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/layout';
 import {map} from 'rxjs/operators';
 import {ThemePalette} from '@angular/material';
 import {TwitchService} from '../twitch.service';
-
-type Column = 1 | 2 | 3 | 4 | 5 | 6;
-type Row = 1 | 2 | 3 | 4;
-
-
-interface TwitchCardMeasurements {
-  readonly channel: string;
-  readonly cols: Column;
-  readonly rows: Row;
-}
-
-export interface ChatCardMeasurments {
-  gridName: string;
-  cols: number;
-  rows: number;
-}
+import {Column, Row, TwitchCardMeasurements} from './twitch-card-measurements.model';
 
 @Component({
   selector: 'app-twitch-dashboard',
@@ -37,6 +22,11 @@ export class TwitchDashboardComponent implements OnInit, OnDestroy {
 
   private breakpoint$: Observable<BreakpointState>;
 
+  /**
+   * Used to force a refresh of the dashboard.
+   */
+  private _refreshView: BehaviorSubject<undefined> = new BehaviorSubject<undefined>(undefined);
+
   constructor(private _configurationService: ConfigurationService,
               private _twitchService: TwitchService,
               private _breakpointObserver: BreakpointObserver) {
@@ -47,41 +37,45 @@ export class TwitchDashboardComponent implements OnInit, OnDestroy {
     this.breakpoint$ = this._breakpointObserver.observe(Breakpoints.Handset);
 
     this._subscription.add(
-      combineLatest([this._twitchService.channels(), this.breakpoint$]).pipe(
-        map(([channels, breakpoint]) => ({channels, breakpoint}))
-      ).subscribe(pair => {
-        const channels = pair.channels;
-        const newSizedChannels = channels.map(((value, index) => this.setCardAndVideoSize(value, index, pair.breakpoint.matches)));
-        if (channels.length !== newSizedChannels.length || JSON.stringify(this.sizedChannels) !== JSON.stringify(newSizedChannels)) {
-          // if the sized channels have changed in some way, re-set them, which causes them to reload.
-          this.sizedChannels = newSizedChannels;
-        }
+      combineLatest(
+        [this._twitchService.channels(),
+          this._twitchService.showingOfflineStreams(),
+          this.breakpoint$, this._refreshView]
+      ).pipe(
+        map(([channels, showingOfflineStreams, breakpoint, refresh]) => ({channels, showingOfflineStreams, breakpoint, refresh}))
+      ).subscribe(data => {
+        const channels = this._twitchService.filteredChannels(data.channels, data.showingOfflineStreams);
+        this._updateChannelsView(channels, data.breakpoint);
       }));
+
   }
 
   ngOnDestroy() {
     this._subscription.unsubscribe();
   }
 
-  /**
-   * Pin a new channel - only the last 2 channels pinned are kept.
-   * After the pinned channels are calculated, sort and re-emit the ordered channels.
-   *
-   * @param channel to pin
-   */
-  pin(channel: string) {
-    const index = this._pinnedChannels.indexOf(channel);
+  public pin(channel: string) {
+    let currentPins = [...this._pinnedChannels];
+    const index = currentPins.indexOf(channel);
     if (index > -1) {
       // remove the item from the pinned channels
-      this._pinnedChannels.splice(index, 1);
+      currentPins.splice(index, 1);
     } else {
       // add the channel to the front of the array
-      this._pinnedChannels = [channel, ...this._pinnedChannels.slice(0, 1)];
+      currentPins = [channel, ...currentPins.slice(0, 1)];
     }
-    const sortedChannels = [...this.sizedChannels]
-      .map(value => value.channel)
-      .sort((a, b) => this.weightOfPin(b) - this.weightOfPin(a));
-    this._twitchService.reorderedChannels(sortedChannels);
+    this._pinnedChannels = currentPins;
+    this._refreshView.next(undefined);
+  }
+
+  private _updateChannelsView(channels: string[], breakpoint: BreakpointState) {
+    // first, resort the channels
+    const updatedChannels = [...channels].sort((a, b) => this.weightOfPin(b) - this.weightOfPin(a))
+      .map(((value, index) => this.setCardAndVideoSize(value, index, breakpoint.matches)));
+    if (JSON.stringify(this.sizedChannels) !== JSON.stringify(updatedChannels)) {
+      // if the sized channels have changed in some way, re-set them, which causes them to reload.
+      this.sizedChannels = updatedChannels;
+    }
   }
 
   /**

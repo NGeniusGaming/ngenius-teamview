@@ -4,7 +4,7 @@ import {MatSlideToggleChange} from '@angular/material';
 import {ConfigurationService} from '../config/configuration.service';
 import {map} from 'rxjs/operators';
 import {interval} from 'rxjs';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {TwitchServiceConfiguration} from '../config/configuration.model';
 import {EMPTY_TWITCH_STREAMS, TwitchStreamsResponse} from './api/twitch-streams.model';
 
@@ -71,28 +71,16 @@ export class TwitchService {
   }
 
   public channels(): Observable<string[]> {
-    return combineLatest([this._channels, this._showingOfflineStreams, this._twitchApiResults]).pipe(
-      map(([channels, isShowingOfflineStreams, streams]) => ({channels, isShowingOfflineStreams, streams})),
-      map(this._reducedChannels)
-    );
+    return this._channels;
   }
 
-  public reorderedChannels(channels: string[]) {
-    console.log('received reordered channels: %o', channels);
-    this._channels.next(channels);
-  }
-
-  private _reducedChannels(combined: { channels: string[], isShowingOfflineStreams: boolean, streams: TwitchStreamsResponse }): string[] {
-    console.log('mapping the next channels');
-    if (combined.isShowingOfflineStreams) {
-      // all channels from config
-      return combined.channels;
+  public filteredChannels(channels: string[], showingOfflineStreams: boolean): string[] {
+    if (showingOfflineStreams) {
+      return [...channels];
     } else {
-      // just ones we received from the twitch api - which only returns the stream if it is live
-      const onlineStreams = combined.streams.data;
+      const onlineStreams = this._twitchApiResults.getValue().data;
       const onlineStreamNames = onlineStreams.map(stream => stream.user_name.toLowerCase());
-
-      return combined.channels.filter(value => onlineStreamNames.includes(value.toLowerCase()));
+      return [...channels].filter(value => onlineStreamNames.includes(value.toLowerCase()));
     }
   }
 }

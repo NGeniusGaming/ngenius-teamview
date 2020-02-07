@@ -4,7 +4,7 @@ import {BehaviorSubject, combineLatest, Observable, Subscription} from 'rxjs';
 import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/layout';
 import {map} from 'rxjs/operators';
 import {ThemePalette} from '@angular/material';
-import {TwitchService} from '../twitch.service';
+import {TwitchDashboardService} from './twitch-dashboard.service';
 import {Column, Row, TwitchCardMeasurements} from './twitch-card-measurements.model';
 
 @Component({
@@ -28,7 +28,7 @@ export class TwitchDashboardComponent implements OnInit, OnDestroy {
   private _refreshView: BehaviorSubject<undefined> = new BehaviorSubject<undefined>(undefined);
 
   constructor(private _configurationService: ConfigurationService,
-              private _twitchService: TwitchService,
+              private _twitchService: TwitchDashboardService,
               private _breakpointObserver: BreakpointObserver) {
   }
 

@@ -1,10 +1,10 @@
-import {fakeAsync, inject, TestBed, tick} from '@angular/core/testing';
+import {fakeAsync, TestBed, tick} from '@angular/core/testing';
 
-import {REFRESH_MINUTES, TwitchService} from './twitch.service';
+import {TwitchDashboardService} from './twitch-dashboard.service';
 import {first} from 'rxjs/operators';
-import {MatSlideToggleChange} from '@angular/material';
-import {ConfigurationService} from '../config/configuration.service';
+import {ConfigurationService} from '../../config/configuration.service';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {REFRESH_MINUTES} from '../twitch-service.helper';
 
 describe('TwitchService', () => {
 
@@ -16,10 +16,10 @@ describe('TwitchService', () => {
     tick();
   }));
 
-  let service: TwitchService;
+  let service: TwitchDashboardService;
 
   it('should be created', () => {
-    service = TestBed.get(TwitchService);
+    service = TestBed.get(TwitchDashboardService);
     expect(service).toBeTruthy();
   });
 

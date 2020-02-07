@@ -15,10 +15,17 @@
       {{configuration.root.applicationTitle}}</span>
     <button id="twitch-header-btn"
             class="service-provider-btn"
+            routerLink="/team-view/twitch"
             [ngClass]="{'tab-is-active': isActive('twitch')}"
             *ngIf="configuration.twitch.display"
             mat-button>Twitch
     </button>
+    <button id="tournaments-header-btn"
+            class="service-provider-btn"
+            routerLink="/team-view/tournament"
+            [ngClass]="{'tab-is-active': isActive('tournament')}"
+            *ngIf="configuration.tournament.display"
+            mat-button>Tournament</button>
     <span class="fill-remaining-space"></span>
     <span *ngIf="isActive('twitch')"
       class="md-toolbar-tools">

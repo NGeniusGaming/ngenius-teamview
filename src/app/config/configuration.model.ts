@@ -3,9 +3,11 @@
  * Declaring it this way ensures that we have strong type-safety
  * between configuration usage and actual configuration.
  */
+
 export interface Configuration {
   readonly root: RootConfiguration;
   readonly twitch: TwitchServiceConfiguration;
+  readonly tournament: TournamentConfiguration;
 }
 
 export interface RootConfiguration {
@@ -18,8 +20,17 @@ export interface RootConfiguration {
  * Additional twitch specific configurations beyond the {BaseServiceConfiguration}
  */
 export interface TwitchServiceConfiguration extends BaseServiceConfiguration {
+  readonly api: TwitchApiConfiguration;
+}
+
+export interface TwitchApiConfiguration {
   readonly channels: string[];
   readonly clientId: string;
+}
+
+export interface TournamentConfiguration extends BaseServiceConfiguration {
+  readonly twitch: any;
+  readonly mixer: any;
 }
 
 /**

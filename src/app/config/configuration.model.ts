@@ -30,7 +30,11 @@ export interface TwitchApiConfiguration {
 
 export interface TournamentConfiguration extends BaseServiceConfiguration {
   readonly twitch: TwitchApiConfiguration;
-  readonly mixer: any;
+  readonly mixer: MixerApiConfiguration;
+}
+
+export interface MixerApiConfiguration {
+  readonly channels: string[];
 }
 
 /**

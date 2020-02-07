@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnInit, SecurityContext, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, SecurityContext, ViewChild} from '@angular/core';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 
 @Component({
@@ -15,8 +15,7 @@ export class TwitchVideoOnlyComponent implements OnInit {
   @ViewChild('twitchContainer', {static: false})
   public twitchContainer: ElementRef;
 
-  constructor(private _domSanitizer: DomSanitizer,
-              private _changeDetectorRef: ChangeDetectorRef) {
+  constructor(private _domSanitizer: DomSanitizer) {
   }
 
   ngOnInit() {

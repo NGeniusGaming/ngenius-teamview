@@ -20,7 +20,14 @@
   },
   "tournament": {
     "display": true,
-    "twitch": {},
+    "twitch": {
+      "channels": [
+        "AkihabaraArcade",
+        "milehighfightnight",
+        "onibakuman"
+      ],
+      "clientId": "6ac9n5q0065wherikv01b7cx06mbs1"
+    },
     "mixer": {}
   }
 }

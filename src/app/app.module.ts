@@ -16,7 +16,8 @@ import { TwitchVideoOnlyComponent } from './twitch/twitch-video-only/twitch-vide
 import { TwitchVideoChatComponent } from './twitch/twitch-video-chat/twitch-video-chat.component';
 import { TwitchDashboardComponent } from './twitch/twitch-dashboard/twitch-dashboard.component';
 import {HttpClientModule} from '@angular/common/http';
-import {TwitchService} from './twitch/twitch.service';
+import { TournamentDashboardComponent } from './tournament/tournament-dashboard/tournament-dashboard.component';
+import { MixerVideoComponent } from './mixer/mixer-video/mixer-video.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,9 @@ import {TwitchService} from './twitch/twitch.service';
     HeaderComponent,
     TwitchVideoChatComponent,
     TwitchVideoOnlyComponent,
-    TwitchDashboardComponent
+    TwitchDashboardComponent,
+    TournamentDashboardComponent,
+    MixerVideoComponent
   ],
   imports: [
     BrowserModule,

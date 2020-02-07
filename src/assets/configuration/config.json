@@ -2,18 +2,39 @@
   "root": {
     "applicationLogo": "assets/ngen.png",
     "applicationTitle": "NGenius Gaming Team View",
-    "externalWebsiteLink": "https://www.ngeniusgaming.com/"
+    "externalWebsiteLink": "https://www.ngeniusgaming.com/",
+    "flags": {
+      "beta": true
+    }
   },
   "twitch": {
     "display": true,
-    "channels": [
-      "NGeniusGaming",
-      "CD_Mangaka",
-      "Dashr40",
-      "ICrazyJI",
-      "SetTopVox",
-      "RealSponge"
-    ],
-    "clientId": "6ac9n5q0065wherikv01b7cx06mbs1"
+    "api": {
+      "channels": [
+        "NGeniusGaming",
+        "CD_Mangaka",
+        "Dashr40",
+        "ICrazyJI",
+        "SetTopVox",
+        "RealSponge"
+      ],
+      "clientId": "6ac9n5q0065wherikv01b7cx06mbs1"
+    }
+  },
+  "tournament": {
+    "display": true,
+    "twitch": {
+      "channels": [
+        "AkihabaraArcade",
+        "milehighfightnight",
+        "onibakuman"
+      ],
+      "clientId": "6ac9n5q0065wherikv01b7cx06mbs1"
+    },
+    "mixer": {
+      "channels": [
+        "Buttonsonwakeup"
+      ]
+    }
   }
 }

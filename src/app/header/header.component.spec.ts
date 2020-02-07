@@ -7,8 +7,8 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ConfigurationService} from '../config/configuration.service';
 import {Configuration} from '../config/configuration.model';
 import {first} from 'rxjs/operators';
-import {TwitchService} from '../twitch/twitch.service';
-import {MockTwitchService} from '../test/mocks/twitch-service.mock.spec';
+import {TwitchDashboardService} from '../twitch/twitch-dashboard/twitch-dashboard.service';
+import {MockTwitchDashboardService} from '../test/mocks/twitch-service.mock.spec';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -21,7 +21,7 @@ describe('HeaderComponent', () => {
       imports: [MatTooltipModule, MatToolbarModule, RouterTestingModule, MatSlideToggleModule, HttpClientTestingModule],
       declarations: [HeaderComponent],
       providers: [
-        {provide: TwitchService, useValue: MockTwitchService}
+        {provide: TwitchDashboardService, useValue: MockTwitchDashboardService}
       ]
     })
       .compileComponents();
@@ -48,7 +48,10 @@ describe('HeaderComponent', () => {
 
   it('should have ngenius gaming as the title', () => {
     const title = fixture.debugElement.nativeElement.querySelector('#application-title').innerText;
-    expect(title).toBe(configuration.root.applicationTitle);
+    const expectedTitle = configuration.root.flags.beta
+      ? configuration.root.applicationTitle + ' BETA'
+      : configuration.root.applicationTitle;
+    expect(title).toBe(expectedTitle);
   });
 
   it('should have loaded the image for the logo', () => {

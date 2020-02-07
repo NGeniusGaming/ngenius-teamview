@@ -1,11 +1,11 @@
-import {Component, OnDestroy, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ConfigurationService} from '../config/configuration.service';
 import {Subscription} from 'rxjs';
 import {Configuration} from '../config/configuration.model';
 import {NavigationEnd, Router} from '@angular/router';
 import {filter, map} from 'rxjs/operators';
 import {MatSlideToggleChange, ThemePalette} from '@angular/material';
-import {TwitchService} from '../twitch/twitch.service';
+import {TwitchDashboardService} from '../twitch/twitch-dashboard/twitch-dashboard.service';
 
 @Component({
   selector: 'app-header',
@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(private _configurationService: ConfigurationService,
               private _router: Router,
-              private _twitchService: TwitchService) {
+              private _twitchService: TwitchDashboardService) {
   }
 
   ngOnInit() {

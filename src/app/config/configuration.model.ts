@@ -14,6 +14,11 @@ export interface RootConfiguration {
   readonly applicationLogo: string;
   readonly applicationTitle: string;
   readonly externalWebsiteLink: string;
+  readonly flags: ApplicationFlags;
+}
+
+export interface ApplicationFlags {
+  readonly beta: boolean;
 }
 
 /**

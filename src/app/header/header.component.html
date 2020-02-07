@@ -12,7 +12,7 @@
     </a>
     <span id="application-title"
           class="application-title">
-      {{configuration.root.applicationTitle}}</span>
+      {{configuration.root.applicationTitle}} <sup class="beta" *ngIf="configuration.root.flags.beta">BETA</sup></span>
     <button id="twitch-header-btn"
             class="service-provider-btn"
             routerLink="/team-view/twitch"

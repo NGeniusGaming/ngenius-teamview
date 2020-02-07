@@ -2,7 +2,10 @@
   "root": {
     "applicationLogo": "assets/ngen.png",
     "applicationTitle": "NGenius Gaming Team View",
-    "externalWebsiteLink": "https://www.ngeniusgaming.com/"
+    "externalWebsiteLink": "https://www.ngeniusgaming.com/",
+    "flags": {
+      "beta": true
+    }
   },
   "twitch": {
     "display": true,

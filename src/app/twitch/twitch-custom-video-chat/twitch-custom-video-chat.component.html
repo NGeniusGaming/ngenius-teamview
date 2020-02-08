@@ -1,0 +1,18 @@
+<div #twitchContainer
+     class="twitch-iframe-container">
+  <iframe
+    [src]="safeUrl"
+    height="100%"
+    width="75%"
+    frameborder="0"
+    scrolling="no"
+    allowfullscreen="false">
+  </iframe>
+  <iframe [src]="chatUrl"
+          id="{{channel}}"
+          height="100%"
+          width="25%"
+          frameborder="0"
+          scrolling="yes">
+  </iframe>
+</div>

@@ -18,6 +18,7 @@ import { TeamViewDashboard } from './twitch/twitch-dashboard/team-view-dashboard
 import {HttpClientModule} from '@angular/common/http';
 import { TournamentDashboardComponent } from './tournament/tournament-dashboard/tournament-dashboard.component';
 import { MixerVideoComponent } from './mixer/mixer-video/mixer-video.component';
+import { TwitchCustomVideoChatComponent } from './twitch/twitch-custom-video-chat/twitch-custom-video-chat.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { MixerVideoComponent } from './mixer/mixer-video/mixer-video.component';
     TwitchVideoOnlyComponent,
     TeamViewDashboard,
     TournamentDashboardComponent,
-    MixerVideoComponent
+    MixerVideoComponent,
+    TwitchCustomVideoChatComponent
   ],
   imports: [
     BrowserModule,

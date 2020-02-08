@@ -1,3 +1,18 @@
+<!-- Make our toggle button a template so we can show it in different places if mobile vs. not mobile. -->
+<ng-template #showOffline>
+  <span *ngIf="isActive('twitch')"
+        class="md-toolbar-tools">
+        <mat-slide-toggle
+          class="example-margin"
+          [color]="color"
+          [checked]="twitchOfflineChecked"
+          [disabled]="disabled"
+          (change)="onToggleChange($event)">
+          Show Offline Streams
+        </mat-slide-toggle>
+    </span>
+</ng-template>
+
 <mat-toolbar color="primary">
   <mat-toolbar-row>
     <a [attr.href]="configuration.root.externalWebsiteLink">
@@ -11,32 +26,54 @@
     </span>
     </a>
     <span id="application-title"
-          class="application-title">
-      {{configuration.root.applicationTitle}} <sup class="beta" *ngIf="configuration.root.flags.beta">BETA</sup></span>
-    <button id="twitch-header-btn"
-            class="service-provider-btn"
-            routerLink="/team-view/twitch"
-            [ngClass]="{'tab-is-active': isActive('twitch')}"
-            *ngIf="configuration.tabs['team-view'].display"
-            mat-button>NGEN
-    </button>
-    <button id="tournaments-header-btn"
-            class="service-provider-btn"
-            routerLink="/team-view/tournament"
-            [ngClass]="{'tab-is-active': isActive('tournament')}"
-            *ngIf="configuration.tabs.tournament.display"
-            mat-button>WS7 Tournament</button>
+          class="application-title"
+          [ngClass]="{'application-title-mobile':isMobile,'application-title-desktop':!isMobile}">
+      {{configuration.root.applicationTitle}}
+      <sup class="beta" *ngIf="configuration.root.flags.beta">BETA</sup>
+    </span>
+    <ng-container *ngIf="!isMobile">
+      <button id="twitch-header-btn"
+              class="service-provider-btn"
+              routerLink="/team-view/twitch"
+              [ngClass]="{'tab-is-active': isActive('twitch')}"
+              *ngIf="configuration.tabs['team-view'].display"
+              mat-button>NGEN
+      </button>
+      <button id="tournaments-header-btn"
+              class="service-provider-btn"
+              routerLink="/team-view/tournament"
+              [ngClass]="{'tab-is-active': isActive('tournament')}"
+              *ngIf="configuration.tabs.tournament.display"
+              mat-button>WS7 Tournament
+      </button>
+    </ng-container>
     <span class="fill-remaining-space"></span>
-    <span *ngIf="isActive('twitch')"
-      class="md-toolbar-tools">
-        <mat-slide-toggle
-          class="example-margin"
-          [color]="color"
-          [checked]="twitchOfflineChecked"
-          [disabled]="disabled"
-          (change)="onToggleChange($event)">
-          Show Offline Streams
-        </mat-slide-toggle>
-  </span>
+    <ng-container *ngIf="!isMobile">
+      <ng-template [ngTemplateOutlet]="showOffline"></ng-template>
+    </ng-container>
+    <button *ngIf="isMobile"
+            mat-icon-button
+            [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item
+              routerLink="/team-view/twitch"
+              [ngClass]="{'menu-item-is-active':isActive('twitch')}">
+        <mat-icon svgIcon="logo"></mat-icon>
+        <span>NGEN</span>
+      </button>
+      <button mat-menu-item
+              routerLink="/team-view/tournament"
+              [ngClass]="{'menu-item-is-active':isActive('tournament')}">
+        <mat-icon svgIcon="trophy"
+                  color="accent"></mat-icon>
+        <span>WS7 Tournament</span>
+      </button>
+    </mat-menu>
+  </mat-toolbar-row>
+  <mat-toolbar-row *ngIf="isMobile && isActive('twitch')">
+    <span class="fill-remaining-space"></span>
+    <ng-template [ngTemplateOutlet]="showOffline"></ng-template>
   </mat-toolbar-row>
 </mat-toolbar>

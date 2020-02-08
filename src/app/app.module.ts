@@ -5,13 +5,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './header/header.component';
-import {MatButtonModule,
-   MatCardModule,
-   MatGridListModule,
-   MatIconModule,
-   MatToolbarModule,
-   MatTooltipModule,
-   MatSlideToggleModule} from '@angular/material';
+import {
+  MatButtonModule,
+  MatCardModule,
+  MatGridListModule,
+  MatIconModule,
+  MatToolbarModule,
+  MatTooltipModule,
+  MatSlideToggleModule, MatMenuModule
+} from '@angular/material';
 import { TwitchVideoOnlyComponent } from './twitch/twitch-video-only/twitch-video-only.component';
 import { TwitchVideoChatComponent } from './twitch/twitch-video-chat/twitch-video-chat.component';
 import { TeamViewDashboard } from './twitch/twitch-dashboard/team-view-dashboard.component';
@@ -42,7 +44,8 @@ import { TwitchCustomVideoChatComponent } from './twitch/twitch-custom-video-cha
     MatCardModule,
     MatGridListModule,
     MatIconModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]

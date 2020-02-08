@@ -1,7 +1,7 @@
 import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
 import {HeaderComponent} from './header.component';
-import {MatSlideToggleModule, MatToolbarModule, MatTooltipModule} from '@angular/material';
+import {MatIconModule, MatMenuModule, MatSlideToggleModule, MatToolbarModule, MatTooltipModule} from '@angular/material';
 import {RouterTestingModule} from '@angular/router/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ConfigurationService} from '../config/configuration.service';
@@ -18,7 +18,15 @@ describe('HeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [MatTooltipModule, MatToolbarModule, RouterTestingModule, MatSlideToggleModule, HttpClientTestingModule],
+      imports: [
+        MatTooltipModule,
+        MatToolbarModule,
+        RouterTestingModule,
+        MatSlideToggleModule,
+        MatMenuModule,
+        MatIconModule,
+        HttpClientTestingModule
+      ],
       declarations: [HeaderComponent],
       providers: [
         {provide: TeamViewDashboardService, useValue: MockTwitchDashboardService}

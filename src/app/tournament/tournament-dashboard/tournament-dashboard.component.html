@@ -1,6 +1,6 @@
 <div class="grid-container">
   <mat-grid-list cols="2" rowHeight="433px">
-    <mat-grid-tile *ngFor="let channel of twitchChannels" [colspan]="1" [rowspan]="1">
+    <mat-grid-tile *ngFor="let channel of twitchChannels" [colspan]="columns" [rowspan]="rows">
       <mat-card class="dashboard-card">
         <mat-card-title class="card-title">
           <span>{{channel}}</span>
@@ -13,7 +13,7 @@
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>
-    <mat-grid-tile *ngFor="let channel of mixerChannels" [colspan]="1" [rowspan]="1">
+    <mat-grid-tile *ngFor="let channel of mixerChannels" [colspan]="columns" [rowspan]="rows">
       <mat-card class="dashboard-card">
         <mat-card-title class="card-title">
           <span>{{channel}}</span>

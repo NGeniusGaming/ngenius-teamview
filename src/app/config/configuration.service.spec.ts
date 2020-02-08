@@ -17,9 +17,9 @@ describe('ConfigurationService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should have Twitch configuration', function(done) {
+  it('should have configuration', function(done) {
       service.configuration().pipe(first()).subscribe(result => {
-        expect(result.twitch).toBeTruthy();
+        expect(result).toBeTruthy();
         done();
       });
   });

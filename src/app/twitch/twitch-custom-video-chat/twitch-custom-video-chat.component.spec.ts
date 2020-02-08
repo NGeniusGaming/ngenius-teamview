@@ -2,7 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TwitchCustomVideoChatComponent } from './twitch-custom-video-chat.component';
 import {MatCardModule} from '@angular/material';
-import {TwitchVideoOnlyComponent} from '../twitch-video-only/twitch-video-only.component';
 
 describe('TwitchCustomVideoChatComponent', () => {
   let component: TwitchCustomVideoChatComponent;
@@ -11,7 +10,7 @@ describe('TwitchCustomVideoChatComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ MatCardModule ],
-      declarations: [ TwitchVideoOnlyComponent ]
+      declarations: [ TwitchCustomVideoChatComponent ]
     })
     .compileComponents();
   }));

@@ -11,6 +11,7 @@ import {TeamViewDashboardService} from '../twitch/twitch-dashboard/team-view-das
 import {MockTwitchDashboardService} from '../test/mocks/twitch-service.mock.spec';
 import {BreakpointObserver, BreakpointState} from '@angular/cdk/layout';
 import {Observable, of} from 'rxjs';
+import Spy = jasmine.Spy;
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -18,12 +19,20 @@ describe('HeaderComponent', () => {
 
   let configuration: Configuration;
 
-  let isDesktop = true;
+  const breakpoint = (matches: boolean): Observable<BreakpointState> => of({matches, breakpoints: {}});
 
-  const fakeObserve = (s: string[]): Observable<BreakpointState> => of({matches: !isDesktop, breakpoints: {}});
+  const breakpointObserver = {
+    observe(): Observable<BreakpointState> {
+      return breakpoint(false);
+    }
+  };
+  let breakpointSpy: Spy;
+  let observeSpy: Spy;
 
-  const breakpointSpy = jasmine.createSpyObj('BreakpointObserver', ['observe']);
-  breakpointSpy.observe.and.callFake(fakeObserve);
+  beforeEach(() => {
+    breakpointSpy = spyOn(breakpointObserver, 'observe');
+    observeSpy = breakpointSpy.and.returnValue(breakpoint(false));
+  });
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -39,7 +48,7 @@ describe('HeaderComponent', () => {
       declarations: [HeaderComponent],
       providers: [
         {provide: TeamViewDashboardService, useValue: MockTwitchDashboardService},
-        {provide: BreakpointObserver, useValue: breakpointSpy}
+        {provide: BreakpointObserver, useValue: breakpointObserver}
       ]
     })
       .compileComponents();
@@ -60,10 +69,9 @@ describe('HeaderComponent', () => {
   });
 
   describe('buttons on the header in desktop mode', () => {
-
     beforeEach(() => {
-      // TODO: This doesn't work like expected yet, will work on later
-      isDesktop = true;
+      // TODO: I HATE ANGULAR TESTING........ STIL DOESN'T DO ANYTHING
+      breakpointSpy.and.returnValue(breakpoint(false));
     });
 
     it('should show the Twitch button', () => {

@@ -4,8 +4,10 @@ import {Subscription} from 'rxjs';
 import {Configuration} from '../config/configuration.model';
 import {NavigationEnd, Router} from '@angular/router';
 import {filter, map} from 'rxjs/operators';
-import {MatSlideToggleChange, ThemePalette} from '@angular/material';
+import {MatIconRegistry, MatSlideToggleChange, ThemePalette} from '@angular/material';
 import {TeamViewDashboardService} from '../twitch/twitch-dashboard/team-view-dashboard.service';
+import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-header',
@@ -17,16 +19,33 @@ export class HeaderComponent implements OnInit, OnDestroy {
   disabled = false;
   twitchOfflineChecked = true;
 
+  isMobile = false;
+
   public configuration: Configuration;
   private _subscription: Subscription = new Subscription();
   private _activeTab: Map<string, boolean> = new Map<string, boolean>([['twitch', false]]);
 
   constructor(private _configurationService: ConfigurationService,
               private _router: Router,
-              private _twitchService: TeamViewDashboardService) {
+              private _twitchService: TeamViewDashboardService,
+              private _breakpointObserver: BreakpointObserver,
+              iconRegistry: MatIconRegistry,
+              sanitizer: DomSanitizer) {
+    iconRegistry.addSvgIcon(
+      'logo',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/ngen.svg')
+    );
+    iconRegistry.addSvgIcon(
+      'trophy',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/trophy.svg')
+    );
   }
 
   ngOnInit() {
+    const breakpoint$ = this._breakpointObserver.observe(Breakpoints.Handset);
+
+    this._subscription.add(breakpoint$.subscribe(value => this.isMobile = value.matches));
+
     this._subscription.add(
       this._configurationService
         .configuration()

@@ -12,7 +12,20 @@
 
 .application-title {
   margin-right: 0.5em;
+}
+
+.application-title-mobile {
+  font-size: smaller;
+  .beta {
+    font-size: x-small;
+  }
+}
+
+.application-title-desktop {
   font-size: larger;
+  .beta {
+    font-size: small;
+  }
 }
 
 .service-provider-btn {
@@ -27,6 +40,7 @@
   box-shadow: 0 2px 2px;
 }
 
-.beta {
-  font-size: small;
+.menu-item-is-active {
+  background: #4b4b4b;
+  font-weight: bolder;
 }

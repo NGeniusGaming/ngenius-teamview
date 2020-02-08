@@ -1,13 +1,18 @@
 /**
+ * The Tab type - known tabs for this application.
+ */
+export type Tab = 'team-view' | 'tournament';
+
+/**
  * The configuration interface for the project.
  * Declaring it this way ensures that we have strong type-safety
  * between configuration usage and actual configuration.
  */
-
 export interface Configuration {
   readonly root: RootConfiguration;
-  readonly twitch: TwitchServiceConfiguration;
-  readonly tournament: TournamentConfiguration;
+  readonly api: ApiConfiguration;
+  readonly tabs: TabsConfiguration;
+  readonly channels: ChannelConfiguration[];
 }
 
 export interface RootConfiguration {
@@ -21,30 +26,26 @@ export interface ApplicationFlags {
   readonly beta: boolean;
 }
 
-/**
- * Additional twitch specific configurations beyond the {BaseServiceConfiguration}
- */
-export interface TwitchServiceConfiguration extends BaseServiceConfiguration {
-  readonly api: TwitchApiConfiguration;
+export interface ApiConfiguration {
+  readonly twitch: TwitchApiConfiguration;
 }
 
 export interface TwitchApiConfiguration {
-  readonly channels: string[];
   readonly clientId: string;
 }
 
-export interface TournamentConfiguration extends BaseServiceConfiguration {
-  readonly twitch: TwitchApiConfiguration;
-  readonly mixer: MixerApiConfiguration;
+export interface TabsConfiguration {
+  readonly ['team-view']: TabConfiguration;
+  readonly tournament: TabConfiguration;
 }
 
-export interface MixerApiConfiguration {
-  readonly channels: string[];
-}
-
-/**
- * The base configuration interface for common properties between various service providers.
- */
-export interface BaseServiceConfiguration {
+export interface TabConfiguration {
   readonly display: boolean;
+}
+
+export interface ChannelConfiguration {
+  readonly id: string;
+  readonly platform: string;
+  readonly rank: string | null;
+  readonly tabs: string[];
 }

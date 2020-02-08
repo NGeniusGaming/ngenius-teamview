@@ -9,17 +9,13 @@ import {TwitchServiceHelper} from '../twitch-service.helper';
 @Injectable({
   providedIn: 'root'
 })
-// TODO: this will become the twitch dashboard service
-export class TwitchDashboardService extends TwitchServiceHelper {
+export class TeamViewDashboardService extends TwitchServiceHelper {
 
   private _showingOfflineStreams: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
   constructor(_configurationService: ConfigurationService,
               _httpClient: HttpClient) {
-
-    super(_configurationService.configuration()
-        .pipe(map(value => value.twitch.api)),
-      _httpClient);
+    super('team-view', _configurationService, _httpClient);
   }
 
   /**
@@ -41,7 +37,7 @@ export class TwitchDashboardService extends TwitchServiceHelper {
   }
 
   public channels(): Observable<string[]> {
-    return this.channels$();
+    return this.channels$().pipe(map(value => value.map(channel => channel.id)));
   }
 
   public filteredChannels(channels: string[], showingOfflineStreams: boolean): string[] {

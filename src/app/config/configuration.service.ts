@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 // @ts-ignore - the compiler is configured to import this.
 import ConfigurationJson from '../../assets/configuration/config.json';
 import {Configuration} from './configuration.model';
-import {BehaviorSubject, Observable } from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 
 
 @Injectable({

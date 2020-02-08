@@ -1,6 +1,6 @@
 import {fakeAsync, TestBed, tick} from '@angular/core/testing';
 
-import {TwitchDashboardService} from './twitch-dashboard.service';
+import {TeamViewDashboardService} from './team-view-dashboard.service';
 import {first} from 'rxjs/operators';
 import {ConfigurationService} from '../../config/configuration.service';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
@@ -16,10 +16,10 @@ describe('TwitchService', () => {
     tick();
   }));
 
-  let service: TwitchDashboardService;
+  let service: TeamViewDashboardService;
 
   it('should be created', () => {
-    service = TestBed.get(TwitchDashboardService);
+    service = TestBed.get(TeamViewDashboardService);
     expect(service).toBeTruthy();
   });
 

@@ -17,14 +17,14 @@
             class="service-provider-btn"
             routerLink="/team-view/twitch"
             [ngClass]="{'tab-is-active': isActive('twitch')}"
-            *ngIf="configuration.twitch.display"
+            *ngIf="configuration.tabs['team-view'].display"
             mat-button>NGEN
     </button>
     <button id="tournaments-header-btn"
             class="service-provider-btn"
             routerLink="/team-view/tournament"
             [ngClass]="{'tab-is-active': isActive('tournament')}"
-            *ngIf="configuration.tournament.display"
+            *ngIf="configuration.tabs.tournament.display"
             mat-button>WS7 Tournament</button>
     <span class="fill-remaining-space"></span>
     <span *ngIf="isActive('twitch')"

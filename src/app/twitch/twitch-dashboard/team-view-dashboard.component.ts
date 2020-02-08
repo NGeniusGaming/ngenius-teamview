@@ -4,17 +4,17 @@ import {BehaviorSubject, combineLatest, Observable, Subscription} from 'rxjs';
 import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/layout';
 import {map} from 'rxjs/operators';
 import {ThemePalette} from '@angular/material';
-import {TwitchDashboardService} from './twitch-dashboard.service';
-import {Column, Row, TwitchCardMeasurements} from './twitch-card-measurements.model';
+import {TeamViewDashboardService} from './team-view-dashboard.service';
+import {Column, Row, TeamViewCardMeasurements} from './twitch-card-measurements.model';
 
 @Component({
   selector: 'app-twitch-dashboard',
-  templateUrl: './twitch-dashboard.component.html',
-  styleUrls: ['./twitch-dashboard.component.scss']
+  templateUrl: './team-view-dashboard.component.html',
+  styleUrls: ['./team-view-dashboard.component.scss']
 })
-export class TwitchDashboardComponent implements OnInit, OnDestroy {
+export class TeamViewDashboard implements OnInit, OnDestroy {
 
-  public sizedChannels: TwitchCardMeasurements[];
+  public sizedChannels: TeamViewCardMeasurements[];
 
   private _subscription = new Subscription();
 
@@ -28,7 +28,7 @@ export class TwitchDashboardComponent implements OnInit, OnDestroy {
   private _refreshView: BehaviorSubject<undefined> = new BehaviorSubject<undefined>(undefined);
 
   constructor(private _configurationService: ConfigurationService,
-              private _twitchService: TwitchDashboardService,
+              private _twitchService: TeamViewDashboardService,
               private _breakpointObserver: BreakpointObserver) {
   }
 
@@ -109,7 +109,7 @@ export class TwitchDashboardComponent implements OnInit, OnDestroy {
    * @param index - the channel's place on the dashboard
    * @param isSmallScreen - whether or not we are on a phone
    */
-  setCardAndVideoSize(channel: string, index: number, isSmallScreen: boolean): TwitchCardMeasurements {
+  setCardAndVideoSize(channel: string, index: number, isSmallScreen: boolean): TeamViewCardMeasurements {
     let cols: Column;
     let rows: Row;
 

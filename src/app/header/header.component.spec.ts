@@ -7,7 +7,7 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ConfigurationService} from '../config/configuration.service';
 import {Configuration} from '../config/configuration.model';
 import {first} from 'rxjs/operators';
-import {TwitchDashboardService} from '../twitch/twitch-dashboard/twitch-dashboard.service';
+import {TeamViewDashboardService} from '../twitch/twitch-dashboard/team-view-dashboard.service';
 import {MockTwitchDashboardService} from '../test/mocks/twitch-service.mock.spec';
 
 describe('HeaderComponent', () => {
@@ -21,7 +21,7 @@ describe('HeaderComponent', () => {
       imports: [MatTooltipModule, MatToolbarModule, RouterTestingModule, MatSlideToggleModule, HttpClientTestingModule],
       declarations: [HeaderComponent],
       providers: [
-        {provide: TwitchDashboardService, useValue: MockTwitchDashboardService}
+        {provide: TeamViewDashboardService, useValue: MockTwitchDashboardService}
       ]
     })
       .compileComponents();

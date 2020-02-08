@@ -5,7 +5,7 @@ import {Configuration} from '../config/configuration.model';
 import {NavigationEnd, Router} from '@angular/router';
 import {filter, map} from 'rxjs/operators';
 import {MatSlideToggleChange, ThemePalette} from '@angular/material';
-import {TwitchDashboardService} from '../twitch/twitch-dashboard/twitch-dashboard.service';
+import {TeamViewDashboardService} from '../twitch/twitch-dashboard/team-view-dashboard.service';
 
 @Component({
   selector: 'app-header',
@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(private _configurationService: ConfigurationService,
               private _router: Router,
-              private _twitchService: TwitchDashboardService) {
+              private _twitchService: TeamViewDashboardService) {
   }
 
   ngOnInit() {

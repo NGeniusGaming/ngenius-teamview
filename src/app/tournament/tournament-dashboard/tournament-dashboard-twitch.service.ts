@@ -11,11 +11,11 @@ import {Observable} from 'rxjs';
 export class TournamentDashboardTwitchService extends TwitchServiceHelper {
 
   constructor(_configurationService: ConfigurationService, _httpClient: HttpClient) {
-    super(_configurationService.configuration().pipe(map(value => value.tournament.twitch)), _httpClient);
+    super('tournament', _configurationService, _httpClient);
   }
 
   public channels(): Observable<string[]> {
-    return this.channels$();
+    return this.channels$().pipe(map(value => value.map(channel => channel.id)));
   }
 
 }

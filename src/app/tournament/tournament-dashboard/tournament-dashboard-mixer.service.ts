@@ -11,6 +11,11 @@ export class TournamentDashboardMixerService {
   constructor(private _configurationService: ConfigurationService) { }
 
   public channels(): Observable<string[]> {
-    return this._configurationService.configuration().pipe(map(value => value.tournament.mixer.channels));
+    return this._configurationService.configuration()
+      .pipe(
+        map(value => value.channels
+          .filter(channel => channel.platform === 'mixer' && channel.tabs.includes('tournament'))
+          .map(channel => channel.id))
+      );
   }
 }

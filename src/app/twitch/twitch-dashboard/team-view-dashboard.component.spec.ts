@@ -1,25 +1,25 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {TwitchDashboardComponent} from './twitch-dashboard.component';
+import {TeamViewDashboard} from './team-view-dashboard.component';
 import {TwitchVideoOnlyComponent} from '../twitch-video-only/twitch-video-only.component';
 import {MatCardModule, MatGridListModule, MatIconModule} from '@angular/material';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {TwitchVideoChatComponent} from '../twitch-video-chat/twitch-video-chat.component';
 
 describe('TwitchDashboardComponent', () => {
-  let component: TwitchDashboardComponent;
-  let fixture: ComponentFixture<TwitchDashboardComponent>;
+  let component: TeamViewDashboard;
+  let fixture: ComponentFixture<TeamViewDashboard>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [MatCardModule, MatGridListModule, MatIconModule, HttpClientTestingModule],
-      declarations: [TwitchDashboardComponent, TwitchVideoOnlyComponent, TwitchVideoChatComponent]
+      declarations: [TeamViewDashboard, TwitchVideoOnlyComponent, TwitchVideoChatComponent]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TwitchDashboardComponent);
+    fixture = TestBed.createComponent(TeamViewDashboard);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {TwitchDashboardComponent} from './twitch/twitch-dashboard/twitch-dashboard.component';
+import {TeamViewDashboard} from './twitch/twitch-dashboard/team-view-dashboard.component';
 import {TournamentDashboardComponent} from './tournament/tournament-dashboard/tournament-dashboard.component';
 
 const home = '/team-view/twitch';
@@ -9,7 +9,7 @@ const routes: Routes = [
   {
     path: 'team-view',
     children: [
-      {path: 'twitch', component: TwitchDashboardComponent},
+      {path: 'twitch', component: TeamViewDashboard},
       {path: 'tournament', component: TournamentDashboardComponent},
       // empty paths and unknown paths in this sub-tree should redirect to home.
       {path: '', redirectTo: home, pathMatch: 'full' },

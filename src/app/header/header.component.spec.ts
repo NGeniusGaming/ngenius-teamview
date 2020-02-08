@@ -9,12 +9,21 @@ import {Configuration} from '../config/configuration.model';
 import {first} from 'rxjs/operators';
 import {TeamViewDashboardService} from '../twitch/twitch-dashboard/team-view-dashboard.service';
 import {MockTwitchDashboardService} from '../test/mocks/twitch-service.mock.spec';
+import {BreakpointObserver, BreakpointState} from '@angular/cdk/layout';
+import {Observable, of} from 'rxjs';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
 
   let configuration: Configuration;
+
+  let isDesktop = true;
+
+  const fakeObserve = (s: string[]): Observable<BreakpointState> => of({matches: !isDesktop, breakpoints: {}});
+
+  const breakpointSpy = jasmine.createSpyObj('BreakpointObserver', ['observe']);
+  breakpointSpy.observe.and.callFake(fakeObserve);
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -29,7 +38,8 @@ describe('HeaderComponent', () => {
       ],
       declarations: [HeaderComponent],
       providers: [
-        {provide: TeamViewDashboardService, useValue: MockTwitchDashboardService}
+        {provide: TeamViewDashboardService, useValue: MockTwitchDashboardService},
+        {provide: BreakpointObserver, useValue: breakpointSpy}
       ]
     })
       .compileComponents();
@@ -49,9 +59,17 @@ describe('HeaderComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should show the Twitch button', () => {
-    const twitchButton = fixture.debugElement.nativeElement.querySelector('#twitch-header-btn');
-    expect(twitchButton).toBeTruthy('Expected the Twitch button to be visible by id: [twitch-header-btn] but it was not!');
+  describe('buttons on the header in desktop mode', () => {
+
+    beforeEach(() => {
+      // TODO: This doesn't work like expected yet, will work on later
+      isDesktop = true;
+    });
+
+    it('should show the Twitch button', () => {
+      const twitchButton = fixture.debugElement.nativeElement.querySelector('#twitch-header-btn');
+      expect(twitchButton).toBeTruthy('Expected the Twitch button to be visible by id: [twitch-header-btn] but it was not!');
+    });
   });
 
   it('should have ngenius gaming as the title', () => {

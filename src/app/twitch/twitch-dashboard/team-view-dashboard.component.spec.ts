@@ -2,7 +2,9 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {TeamViewDashboard} from './team-view-dashboard.component';
 import {TwitchVideoOnlyComponent} from '../twitch-video-only/twitch-video-only.component';
-import {MatCardModule, MatGridListModule, MatIconModule} from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatIconModule } from '@angular/material/icon';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {TwitchVideoChatComponent} from '../twitch-video-chat/twitch-video-chat.component';
 

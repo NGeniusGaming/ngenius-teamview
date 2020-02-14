@@ -1,7 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TournamentDashboardComponent } from './tournament-dashboard.component';
-import {MatCardModule, MatGridListModule} from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatGridListModule } from '@angular/material/grid-list';
 import {TwitchVideoChatComponent} from '../../twitch/twitch-video-chat/twitch-video-chat.component';
 import {MixerVideoComponent} from '../../mixer/mixer-video/mixer-video.component';
 import {HttpClientTestingModule} from '@angular/common/http/testing';

@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TwitchVideoOnlyComponent } from './twitch-video-only.component';
-import {MatCardModule} from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
 
 describe('TwitchVideoOnlyComponent', () => {
   let component: TwitchVideoOnlyComponent;

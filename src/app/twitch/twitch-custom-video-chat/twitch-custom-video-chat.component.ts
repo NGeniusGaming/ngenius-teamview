@@ -13,7 +13,7 @@ export class TwitchCustomVideoChatComponent implements OnInit {
   @Input()
   public channel: string;
 
-  @ViewChild('twitchContainer', {static: false})
+  @ViewChild('twitchContainer')
   public twitchContainer: ElementRef;
 
   constructor(private _domSanitizer: DomSanitizer) {

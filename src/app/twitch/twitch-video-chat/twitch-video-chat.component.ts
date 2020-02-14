@@ -12,7 +12,7 @@ export class TwitchVideoChatComponent implements OnInit, AfterViewInit {
   @Input()
   public channel: string;
 
-  @ViewChild('twitchContainer', {static: false})
+  @ViewChild('twitchContainer')
   public twitchContainer: ElementRef;
 
   constructor() {

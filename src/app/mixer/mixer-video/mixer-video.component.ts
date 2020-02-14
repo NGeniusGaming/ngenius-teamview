@@ -14,7 +14,7 @@ export class MixerVideoComponent implements OnInit {
   @Input()
   public channel: string;
 
-  @ViewChild('mixerContainer', {static: false})
+  @ViewChild('mixerContainer')
   public twitchContainer: ElementRef;
 
   constructor(private _domSanitizer: DomSanitizer) {

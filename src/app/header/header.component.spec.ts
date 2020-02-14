@@ -1,7 +1,11 @@
 import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
 import {HeaderComponent} from './header.component';
-import {MatIconModule, MatMenuModule, MatSlideToggleModule, MatToolbarModule, MatTooltipModule} from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import {RouterTestingModule} from '@angular/router/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ConfigurationService} from '../config/configuration.service';

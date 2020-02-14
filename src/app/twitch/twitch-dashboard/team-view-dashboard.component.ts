@@ -3,7 +3,7 @@ import {ConfigurationService} from '../../config/configuration.service';
 import {BehaviorSubject, combineLatest, Observable, Subscription} from 'rxjs';
 import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/layout';
 import {map} from 'rxjs/operators';
-import {ThemePalette} from '@angular/material';
+import { ThemePalette } from '@angular/material/core';
 import {TeamViewDashboardService} from './team-view-dashboard.service';
 import {Column, Row, TeamViewCardMeasurements} from './twitch-card-measurements.model';
 

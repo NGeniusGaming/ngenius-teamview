@@ -1,5 +1,7 @@
 /**
  * The Tab type - known tabs for this application.
+ *
+ * Additionally, this is used to determine the endpoint for data from the ngen-api
  */
 export type Tab = 'team-view' | 'tournament';
 
@@ -10,7 +12,6 @@ export type Tab = 'team-view' | 'tournament';
  */
 export interface Configuration {
   readonly root: RootConfiguration;
-  readonly api: ApiConfiguration;
   readonly tabs: TabsConfiguration;
   readonly channels: ChannelConfiguration[];
 }
@@ -19,19 +20,12 @@ export interface RootConfiguration {
   readonly applicationLogo: string;
   readonly applicationTitle: string;
   readonly externalWebsiteLink: string;
+  readonly apiUrl: string;
   readonly flags: ApplicationFlags;
 }
 
 export interface ApplicationFlags {
   readonly beta: boolean;
-}
-
-export interface ApiConfiguration {
-  readonly twitch: TwitchApiConfiguration;
-}
-
-export interface TwitchApiConfiguration {
-  readonly clientId: string;
 }
 
 export interface TabsConfiguration {

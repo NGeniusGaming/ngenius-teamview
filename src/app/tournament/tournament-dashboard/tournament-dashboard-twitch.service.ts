@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {TwitchServiceHelper} from '../../twitch/twitch-service.helper';
 import {ConfigurationService} from '../../config/configuration.service';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
+import {TwitchServiceHelper} from '../../twitch/twitch-service.helper';
 
 @Injectable({
   providedIn: 'root'

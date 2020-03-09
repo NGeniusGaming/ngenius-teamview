@@ -3,6 +3,7 @@
     "applicationLogo": "assets/ngen.png",
     "applicationTitle": "NGenius Gaming Team View",
     "externalWebsiteLink": "https://www.ngeniusgaming.com/",
+    "apiUrl": "https://ngen-ingress.bwvolleyball.c1.kubesail.net/",
     "flags": {
       "beta": true
     }

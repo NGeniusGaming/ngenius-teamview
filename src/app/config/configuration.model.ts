@@ -1,5 +1,7 @@
 /**
  * The Tab type - known tabs for this application.
+ *
+ * Additionally, this is used to determine the endpoint for data from the ngen-api
  */
 export type Tab = 'team-view' | 'tournament';
 
@@ -19,6 +21,7 @@ export interface RootConfiguration {
   readonly applicationLogo: string;
   readonly applicationTitle: string;
   readonly externalWebsiteLink: string;
+  readonly apiUrl: string;
   readonly flags: ApplicationFlags;
 }
 

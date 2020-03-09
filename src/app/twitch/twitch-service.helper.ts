@@ -1,5 +1,5 @@
 import {BehaviorSubject, combineLatest, interval, Observable} from 'rxjs';
-import {ChannelConfiguration, RootConfiguration, Tab, TwitchApiConfiguration} from '../config/configuration.model';
+import {ChannelConfiguration, RootConfiguration, Tab} from '../config/configuration.model';
 import {EMPTY_TWITCH_STREAMS, TwitchStreamsResponse} from './api/twitch-streams.model';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';

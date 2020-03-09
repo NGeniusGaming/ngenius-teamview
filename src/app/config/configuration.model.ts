@@ -12,7 +12,6 @@ export type Tab = 'team-view' | 'tournament';
  */
 export interface Configuration {
   readonly root: RootConfiguration;
-  readonly api: ApiConfiguration;
   readonly tabs: TabsConfiguration;
   readonly channels: ChannelConfiguration[];
 }
@@ -27,14 +26,6 @@ export interface RootConfiguration {
 
 export interface ApplicationFlags {
   readonly beta: boolean;
-}
-
-export interface ApiConfiguration {
-  readonly twitch: TwitchApiConfiguration;
-}
-
-export interface TwitchApiConfiguration {
-  readonly clientId: string;
 }
 
 export interface TabsConfiguration {

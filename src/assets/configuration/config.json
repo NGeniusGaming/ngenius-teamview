@@ -8,11 +8,6 @@
       "beta": true
     }
   },
-  "api": {
-    "twitch": {
-      "clientId": "6ac9n5q0065wherikv01b7cx06mbs1"
-    }
-  },
   "tabs": {
     "team-view": {
       "display": true

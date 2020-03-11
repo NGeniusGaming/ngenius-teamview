@@ -3,15 +3,16 @@
   <iframe
     [src]="safeUrl"
     height="100%"
-    width="75%"
+    [width]="videoPercentage() + '%'"
     frameborder="0"
     scrolling="no"
     allowfullscreen="false">
   </iframe>
-  <iframe [src]="chatUrl"
+  <iframe *ngIf="showChat()"
+          [src]="chatUrl"
           id="{{channel}}"
           height="100%"
-          width="25%"
+          [width]="chatPercentage() + '%'"
           frameborder="0"
           scrolling="yes">
   </iframe>

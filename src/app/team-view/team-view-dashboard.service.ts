@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
-import {ConfigurationService} from '../../config/configuration.service';
+import {ConfigurationService} from '../config/configuration.service';
 import {map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
-import {TwitchServiceHelper} from '../twitch-service.helper';
+import {TwitchServiceHelper} from '../twitch/twitch-service.helper';
 
 @Injectable({
   providedIn: 'root'

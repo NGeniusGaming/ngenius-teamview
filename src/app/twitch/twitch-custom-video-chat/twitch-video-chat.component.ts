@@ -2,16 +2,18 @@ import {Component, ElementRef, Input, OnInit, SecurityContext, ViewChild} from '
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-twitch-custom-video-chat',
-  templateUrl: './twitch-custom-video-chat.component.html',
-  styleUrls: ['./twitch-custom-video-chat.component.scss']
+  selector: 'app-twitch-video-chat',
+  templateUrl: './twitch-video-chat.component.html',
+  styleUrls: ['./twitch-video-chat.component.scss']
 })
-export class TwitchCustomVideoChatComponent implements OnInit {
+export class TwitchVideoChatComponent implements OnInit {
 
   public safeUrl: SafeResourceUrl;
   public chatUrl: SafeResourceUrl;
   @Input()
   public channel: string;
+  @Input()
+  public videoPercent: number;
 
   @ViewChild('twitchContainer')
   public twitchContainer: ElementRef;
@@ -31,5 +33,20 @@ export class TwitchCustomVideoChatComponent implements OnInit {
       // guarantee there are no XSS attacks
       this._domSanitizer.sanitize(SecurityContext.URL, url)
     );
+  }
+
+  public videoPercentage(): number {
+    if (this.videoPercent <= 0 || this.videoPercent > 100) {
+      throw Error('video percent must be greater than 0 and not exceeding 100. Actual was ' + this.videoPercent);
+    }
+    return this.videoPercent;
+  }
+
+  public chatPercentage(): number {
+    return 100 - this.videoPercent;
+  }
+
+  public showChat(): boolean {
+    return this.chatPercentage() > 0;
   }
 }

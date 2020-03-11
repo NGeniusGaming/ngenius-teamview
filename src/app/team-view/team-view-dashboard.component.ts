@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ConfigurationService} from '../../config/configuration.service';
+import {ConfigurationService} from '../config/configuration.service';
 import {BehaviorSubject, combineLatest, Observable, Subscription} from 'rxjs';
 import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/layout';
 import {map} from 'rxjs/operators';
@@ -12,7 +12,7 @@ import {Column, Row, TeamViewCardMeasurements} from './twitch-card-measurements.
   templateUrl: './team-view-dashboard.component.html',
   styleUrls: ['./team-view-dashboard.component.scss']
 })
-export class TeamViewDashboard implements OnInit, OnDestroy {
+export class TeamViewDashboardComponent implements OnInit, OnDestroy {
 
   public sizedChannels: TeamViewCardMeasurements[];
 

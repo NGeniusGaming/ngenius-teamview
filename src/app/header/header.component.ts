@@ -7,7 +7,7 @@ import {filter, map} from 'rxjs/operators';
 import { ThemePalette } from '@angular/material/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
-import {TeamViewDashboardService} from '../twitch/twitch-dashboard/team-view-dashboard.service';
+import {TeamViewDashboardService} from '../team-view/team-view-dashboard.service';
 import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 import {DomSanitizer} from '@angular/platform-browser';
 

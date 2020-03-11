@@ -1,12 +1,11 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {TeamViewDashboardComponent} from './team-view-dashboard.component';
-import {TwitchVideoOnlyComponent} from '../twitch/twitch-video-only/twitch-video-only.component';
+import {TwitchVideoChatComponent} from '../twitch/twitch-custom-video-chat/twitch-video-chat.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {TwitchVideoChatComponent} from '../twitch/twitch-video-chat/twitch-video-chat.component';
 
 describe('TwitchDashboardComponent', () => {
   let component: TeamViewDashboardComponent;
@@ -15,7 +14,7 @@ describe('TwitchDashboardComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [MatCardModule, MatGridListModule, MatIconModule, HttpClientTestingModule],
-      declarations: [TeamViewDashboardComponent, TwitchVideoOnlyComponent, TwitchVideoChatComponent]
+      declarations: [TeamViewDashboardComponent, TwitchVideoChatComponent]
     })
       .compileComponents();
   }));

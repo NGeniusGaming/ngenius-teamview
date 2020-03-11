@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {TeamViewDashboard} from './twitch/twitch-dashboard/team-view-dashboard.component';
+import {TeamViewDashboard} from './team-view/team-view-dashboard.component';
 import {TournamentDashboardComponent} from './tournament/tournament-dashboard/tournament-dashboard.component';
 
 const home = '/team-view/twitch';

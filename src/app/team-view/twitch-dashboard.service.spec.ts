@@ -2,9 +2,9 @@ import {fakeAsync, TestBed, tick} from '@angular/core/testing';
 
 import {TeamViewDashboardService} from './team-view-dashboard.service';
 import {first} from 'rxjs/operators';
-import {ConfigurationService} from '../../config/configuration.service';
+import {ConfigurationService} from '../config/configuration.service';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {REFRESH_MINUTES} from '../twitch-service.helper';
+import {REFRESH_MINUTES} from '../twitch/twitch-service.helper';
 
 describe('TwitchService', () => {
 

@@ -15,7 +15,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TwitchVideoOnlyComponent } from './twitch/twitch-video-only/twitch-video-only.component';
 import { TwitchVideoChatComponent } from './twitch/twitch-video-chat/twitch-video-chat.component';
-import { TeamViewDashboard } from './twitch/twitch-dashboard/team-view-dashboard.component';
+import { TeamViewDashboard } from './team-view/team-view-dashboard.component';
 import {HttpClientModule} from '@angular/common/http';
 import { TournamentDashboardComponent } from './tournament/tournament-dashboard/tournament-dashboard.component';
 import { MixerVideoComponent } from './mixer/mixer-video/mixer-video.component';

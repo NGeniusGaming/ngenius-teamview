@@ -1,6 +1,6 @@
 <!-- Make our toggle button a template so we can show it in different places if mobile vs. not mobile. -->
 <ng-template #showOffline>
-  <span *ngIf="isActive('twitch')"
+  <span *ngIf="isActive('team')"
         class="md-toolbar-tools">
         <mat-slide-toggle
           class="example-margin"
@@ -34,8 +34,8 @@
     <ng-container *ngIf="!isMobile">
       <button id="twitch-header-btn"
               class="service-provider-btn"
-              routerLink="/team-view/twitch"
-              [ngClass]="{'tab-is-active': isActive('twitch')}"
+              routerLink="/team-view/team"
+              [ngClass]="{'tab-is-active': isActive('team')}"
               *ngIf="configuration.tabs['team-view'].display"
               mat-button>NGEN
       </button>
@@ -58,8 +58,8 @@
     </button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item
-              routerLink="/team-view/twitch"
-              [ngClass]="{'menu-item-is-active':isActive('twitch')}">
+              routerLink="/team-view/team"
+              [ngClass]="{'menu-item-is-active':isActive('team')}">
         <mat-icon svgIcon="logo"></mat-icon>
         <span>NGEN</span>
       </button>
@@ -72,7 +72,7 @@
       </button>
     </mat-menu>
   </mat-toolbar-row>
-  <mat-toolbar-row *ngIf="isMobile && isActive('twitch')">
+  <mat-toolbar-row *ngIf="isMobile && isActive('team')">
     <span class="fill-remaining-space"></span>
     <ng-template [ngTemplateOutlet]="showOffline"></ng-template>
   </mat-toolbar-row>

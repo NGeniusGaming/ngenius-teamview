@@ -13,7 +13,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { TwitchVideoOnlyComponent } from './twitch/twitch-video-only/twitch-video-only.component';
 import { TwitchVideoChatComponent } from './twitch/twitch-custom-video-chat/twitch-video-chat.component';
 import { TeamViewDashboardComponent } from './team-view/team-view-dashboard.component';
 import {HttpClientModule} from '@angular/common/http';
@@ -24,7 +23,6 @@ import { MixerVideoComponent } from './mixer/mixer-video/mixer-video.component';
   declarations: [
     AppComponent,
     HeaderComponent,
-    TwitchVideoOnlyComponent,
     TwitchVideoChatComponent,
     MixerVideoComponent,
     TeamViewDashboardComponent,

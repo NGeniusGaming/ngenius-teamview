@@ -12,7 +12,7 @@ import {Column, Row, TeamViewCardMeasurements} from './twitch-card-measurements.
   templateUrl: './team-view-dashboard.component.html',
   styleUrls: ['./team-view-dashboard.component.scss']
 })
-export class TeamViewDashboard implements OnInit, OnDestroy {
+export class TeamViewDashboardComponent implements OnInit, OnDestroy {
 
   public sizedChannels: TeamViewCardMeasurements[];
 

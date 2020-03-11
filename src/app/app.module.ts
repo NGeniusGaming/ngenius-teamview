@@ -14,23 +14,21 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TwitchVideoOnlyComponent } from './twitch/twitch-video-only/twitch-video-only.component';
-import { TwitchVideoChatComponent } from './twitch/twitch-video-chat/twitch-video-chat.component';
-import { TeamViewDashboard } from './team-view/team-view-dashboard.component';
+import { TwitchVideoChatComponent } from './twitch/twitch-custom-video-chat/twitch-video-chat.component';
+import { TeamViewDashboardComponent } from './team-view/team-view-dashboard.component';
 import {HttpClientModule} from '@angular/common/http';
 import { TournamentDashboardComponent } from './tournament/tournament-dashboard/tournament-dashboard.component';
 import { MixerVideoComponent } from './mixer/mixer-video/mixer-video.component';
-import { TwitchCustomVideoChatComponent } from './twitch/twitch-custom-video-chat/twitch-custom-video-chat.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    TwitchVideoChatComponent,
     TwitchVideoOnlyComponent,
-    TeamViewDashboard,
-    TournamentDashboardComponent,
+    TwitchVideoChatComponent,
     MixerVideoComponent,
-    TwitchCustomVideoChatComponent
+    TeamViewDashboardComponent,
+    TournamentDashboardComponent,
   ],
   imports: [
     BrowserModule,

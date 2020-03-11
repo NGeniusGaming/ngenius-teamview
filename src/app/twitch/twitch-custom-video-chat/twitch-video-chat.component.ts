@@ -3,10 +3,10 @@ import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-twitch-custom-video-chat',
-  templateUrl: './twitch-custom-video-chat.component.html',
-  styleUrls: ['./twitch-custom-video-chat.component.scss']
+  templateUrl: './twitch-video-chat.component.html',
+  styleUrls: ['./twitch-video-chat.component.scss']
 })
-export class TwitchCustomVideoChatComponent implements OnInit {
+export class TwitchVideoChatComponent implements OnInit {
 
   public safeUrl: SafeResourceUrl;
   public chatUrl: SafeResourceUrl;

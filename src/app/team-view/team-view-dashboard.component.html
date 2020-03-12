@@ -1,6 +1,6 @@
 <div class="grid-container">
   <mat-grid-list cols="6" rowHeight="187.5px">
-    <mat-grid-tile *ngFor="let channel of sizedChannels" [colspan]="channel.cols" [rowspan]="channel.rows">
+    <mat-grid-tile *ngFor="let channel of sizedChannels; trackBy: trackVideoCards" [colspan]="channel.cols" [rowspan]="channel.rows">
       <mat-card class="dashboard-card">
         <mat-card-title class="card-title">
           <span>{{channel.channel}}</span>
@@ -8,11 +8,8 @@
           <span><mat-icon [color]="isPinned(channel.channel)" (click)="pin(channel.channel)">star</mat-icon></span>
         </mat-card-title>
         <mat-card-content class="video-content">
-          <div *ngIf="isPinned(channel.channel)" class="video-content">
-            <app-twitch-video-chat [channel]="channel.channel" [videoPercent]="75"></app-twitch-video-chat>
-          </div>
-          <div *ngIf="!isPinned(channel.channel)" class="video-content">
-            <app-twitch-video-chat [channel]="channel.channel" [videoPercent]="100"></app-twitch-video-chat>
+          <div class="video-content">
+            <app-twitch-video-chat [channel]="channel.channel" [videoPercent]="calculateVideoPercentage(channel.channel)"></app-twitch-video-chat>
           </div>
         </mat-card-content>
       </mat-card>

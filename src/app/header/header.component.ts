@@ -19,7 +19,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 export class HeaderComponent implements OnInit, OnDestroy {
   color: ThemePalette = 'accent';
   disabled = false;
-  twitchOfflineChecked = true;
+  twitchOfflineChecked = false;
 
   isMobile = false;
 

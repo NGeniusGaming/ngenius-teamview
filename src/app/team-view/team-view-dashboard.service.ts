@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {Observable, ReplaySubject} from 'rxjs';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import {ConfigurationService} from '../config/configuration.service';
-import {map} from 'rxjs/operators';
+import {first, map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {TwitchServiceHelper} from '../twitch/twitch-service.helper';
 
@@ -11,11 +11,14 @@ import {TwitchServiceHelper} from '../twitch/twitch-service.helper';
 })
 export class TeamViewDashboardService extends TwitchServiceHelper {
 
-  private _showingOfflineStreams: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  private _showingOfflineStreams: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
 
   constructor(_configurationService: ConfigurationService,
               _httpClient: HttpClient) {
     super('team-view', _configurationService, _httpClient);
+    this.anyOnline()
+      .pipe(first())
+      .subscribe(value => this._showingOfflineStreams.next(!value));
   }
 
   /**

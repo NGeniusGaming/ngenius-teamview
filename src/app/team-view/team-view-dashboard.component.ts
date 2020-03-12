@@ -54,6 +54,11 @@ export class TeamViewDashboardComponent implements OnInit, OnDestroy {
     this._subscription.unsubscribe();
   }
 
+  trackVideoCards(_: number, item: TeamViewCardMeasurements): string {
+    if (!item) { return null; }
+    return item.channel;
+  }
+
   public pin(channel: string) {
     let currentPins = [...this._pinnedChannels];
     const index = currentPins.indexOf(channel);
@@ -92,6 +97,18 @@ export class TeamViewDashboardComponent implements OnInit, OnDestroy {
       default:
         return 0;
     }
+  }
+
+  /**
+   * If a video is pinned, we shrink the video to 75% to
+   * display the chat window. Othwerise, the video uses
+   * 100% of the card's space.
+   *
+   * @param channel to determine video percentage
+   * @returns twitch video card percentage
+   */
+  calculateVideoPercentage(channel: string): number {
+    return !!this.isPinned(channel) ? 75 : 100;
   }
 
   /**

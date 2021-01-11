@@ -1,5 +1,6 @@
-import {Component, ElementRef, Input, OnInit, SecurityContext, ViewChild} from '@angular/core';
+import {Component, ElementRef, Inject, Input, OnInit, SecurityContext, ViewChild} from '@angular/core';
 import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
+import {DOCUMENT} from '@angular/common';
 
 @Component({
   selector: 'app-twitch-video-chat',
@@ -18,12 +19,14 @@ export class TwitchVideoChatComponent implements OnInit {
   @ViewChild('twitchContainer')
   public twitchContainer: ElementRef;
 
-  constructor(private _domSanitizer: DomSanitizer) {
-  }
+  constructor(
+    private _domSanitizer: DomSanitizer,
+    @Inject(DOCUMENT) private document: Document
+  ) { }
 
   ngOnInit() {
     // Make the resource a {SafeResourceUrl}
-    this.safeUrl = this._safe( `https://player.twitch.tv/?channel=${this.channel}&muted=true`);
+    this.safeUrl = this._safe( `https://player.twitch.tv/?channel=${this.channel}&muted=true&autoplay=false&parent=${this.parent}`);
     this.chatUrl = this._safe(`https://www.twitch.tv/embed/${this.channel}/chat`);
   }
 
@@ -33,6 +36,10 @@ export class TwitchVideoChatComponent implements OnInit {
       // guarantee there are no XSS attacks
       this._domSanitizer.sanitize(SecurityContext.URL, url)
     );
+  }
+
+  private get parent(): string {
+    return this.document.location.hostname;
   }
 
   public videoPercentage(): number {

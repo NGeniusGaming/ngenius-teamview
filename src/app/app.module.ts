@@ -17,14 +17,12 @@ import { TwitchVideoChatComponent } from './twitch/twitch-custom-video-chat/twit
 import { TeamViewDashboardComponent } from './team-view/team-view-dashboard.component';
 import {HttpClientModule} from '@angular/common/http';
 import { TournamentDashboardComponent } from './tournament/tournament-dashboard/tournament-dashboard.component';
-import { MixerVideoComponent } from './mixer/mixer-video/mixer-video.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     TwitchVideoChatComponent,
-    MixerVideoComponent,
     TeamViewDashboardComponent,
     TournamentDashboardComponent,
   ],

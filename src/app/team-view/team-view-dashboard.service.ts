@@ -2,7 +2,8 @@ import {Injectable} from '@angular/core';
 import {Observable, ReplaySubject} from 'rxjs';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import {ConfigurationService} from '../config/configuration.service';
-import {first, map} from 'rxjs/operators';
+import {first, flatMap, map} from 'rxjs/operators';
+import { of } from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {TwitchServiceHelper} from '../twitch/twitch-service.helper';
 
@@ -43,7 +44,10 @@ export class TeamViewDashboardService extends TwitchServiceHelper {
     return this.channels$().pipe(map(value => value.map(channel => channel.id)));
   }
 
-  public filteredChannels(channels: string[], showingOfflineStreams: boolean): string[] {
-    return showingOfflineStreams ? [...channels] : this.onlineChannelsOnly(channels);
+  public filteredChannels(channels: string[]): Observable<string[]> {
+    return this._showingOfflineStreams.asObservable()
+      .pipe(
+        flatMap(isShowingOffline => isShowingOffline ? of([...channels]) : this.onlineChannelsOnly(channels))
+      );
   }
 }

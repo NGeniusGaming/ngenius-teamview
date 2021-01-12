@@ -13,18 +13,5 @@
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>
-    <mat-grid-tile *ngFor="let channel of mixerChannels" [colspan]="columns" [rowspan]="rows">
-      <mat-card class="dashboard-card">
-        <mat-card-title class="card-title">
-          <span>{{channel}}</span>
-          <span class="fill-remaining-space"></span>
-        </mat-card-title>
-        <mat-card-content class="video-content">
-          <div *ngIf="channel" class="video-content">
-            <app-mixer-video [channel]="channel"></app-mixer-video>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </mat-grid-tile>
   </mat-grid-list>
 </div>

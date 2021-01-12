@@ -3,7 +3,7 @@
     "applicationLogo": "assets/ngen.png",
     "applicationTitle": "NGenius Gaming Team View",
     "externalWebsiteLink": "https://www.ngeniusgaming.com/",
-    "apiUrl": "https://api.ngen-alpha.duckdns.org/",
+    "apiUrl": "https://api.ngeniusgaming.us/",
     "flags": {
       "beta": true
     }

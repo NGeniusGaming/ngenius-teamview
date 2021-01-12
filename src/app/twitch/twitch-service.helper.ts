@@ -69,10 +69,12 @@ export abstract class TwitchServiceHelper {
    * which are cross referenced with the twitch api results.
    * @param channels to check against the twitch api
    */
-  public onlineChannelsOnly(channels: string[]): string[] {
-    const onlineStreams = this._twitchApiResults.getValue().data;
-    const onlineStreamNames = onlineStreams.map(stream => stream.user_name.toLowerCase());
-    return [...channels].filter(value => onlineStreamNames.includes(value.toLowerCase()));
+  public onlineChannelsOnly(channels: string[]): Observable<string[]> {
+    return this._twitchApiResults.asObservable()
+      .pipe(
+        map(results => results.data.map(stream => stream.user_name.toLowerCase())),
+        map(online => [...channels].filter(value => online.includes(value.toLowerCase())))
+      );
   }
 
   /**

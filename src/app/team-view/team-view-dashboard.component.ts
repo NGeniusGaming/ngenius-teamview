@@ -44,10 +44,8 @@ export class TeamViewDashboardComponent implements OnInit, OnDestroy {
       ).pipe(
         map(([channels, showingOfflineStreams, breakpoint, refresh]) => ({channels, showingOfflineStreams, breakpoint, refresh}))
       ).subscribe(data => {
-        this._twitchService.filteredChannels(data.channels).subscribe(channels => {
-          this._updateChannelsView(channels, data.breakpoint);
-          console.log('Current channels: %o', channels);
-        });
+        this._twitchService.filteredChannels(data.channels)
+          .subscribe(channels => this._updateChannelsView(channels, data.breakpoint));
       }));
 
   }

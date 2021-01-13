@@ -9,7 +9,7 @@ describe('TournamentDashboardTwitchService', () => {
   }));
 
   it('should be created', () => {
-    const service: TournamentDashboardTwitchService = TestBed.get(TournamentDashboardTwitchService);
+    const service: TournamentDashboardTwitchService = TestBed.inject(TournamentDashboardTwitchService);
     expect(service).toBeTruthy();
   });
 });

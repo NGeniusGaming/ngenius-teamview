@@ -1,9 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Observable, ReplaySubject} from 'rxjs';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import {Observable, of, ReplaySubject} from 'rxjs';
+import {MatSlideToggleChange} from '@angular/material/slide-toggle';
 import {ConfigurationService} from '../config/configuration.service';
 import {first, flatMap, map} from 'rxjs/operators';
-import { of } from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {TwitchServiceHelper} from '../twitch/twitch-service.helper';
 

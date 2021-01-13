@@ -1,6 +1,7 @@
 <div class="grid-container">
   <mat-grid-list cols="6" rowHeight="187.5px">
-    <mat-grid-tile *ngFor="let channel of sizedChannels; trackBy: trackVideoCards" [colspan]="channel.cols" [rowspan]="channel.rows">
+    <mat-grid-tile *ngFor="let channel of sizedChannels; trackBy: trackVideoCards" [colspan]="channel.cols"
+                   [rowspan]="channel.rows">
       <mat-card class="dashboard-card">
         <mat-card-title class="card-title">
           <span>{{channel.channel}}</span>
@@ -9,7 +10,8 @@
         </mat-card-title>
         <mat-card-content class="video-content">
           <div class="video-content">
-            <app-twitch-video-chat [channel]="channel.channel" [videoPercent]="calculateVideoPercentage(channel.channel)"></app-twitch-video-chat>
+            <app-twitch-video-chat [channel]="channel.channel"
+                                   [videoPercent]="calculateVideoPercentage(channel.channel)"></app-twitch-video-chat>
           </div>
         </mat-card-content>
       </mat-card>

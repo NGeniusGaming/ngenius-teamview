@@ -1,4 +1,4 @@
-import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {async, ComponentFixture, fakeAsync, TestBed, tick, waitForAsync} from '@angular/core/testing';
 
 import {HeaderComponent} from './header.component';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,12 +10,13 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ConfigurationService} from '../config/configuration.service';
 import {Configuration} from '../config/configuration.model';
-import {first} from 'rxjs/operators';
+import {first, map} from 'rxjs/operators';
 import {TeamViewDashboardService} from '../team-view/team-view-dashboard.service';
 import {MockTwitchDashboardService} from '../test/mocks/twitch-service.mock.spec';
 import {BreakpointObserver, BreakpointState} from '@angular/cdk/layout';
 import {Observable, of} from 'rxjs';
 import Spy = jasmine.Spy;
+import {MockConfigurationService} from '../test/mocks/configuration.mock.spec';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -38,7 +39,7 @@ describe('HeaderComponent', () => {
     observeSpy = breakpointSpy.and.returnValue(breakpoint(false));
   });
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         MatTooltipModule,
@@ -52,7 +53,8 @@ describe('HeaderComponent', () => {
       declarations: [HeaderComponent],
       providers: [
         {provide: TeamViewDashboardService, useValue: MockTwitchDashboardService},
-        {provide: BreakpointObserver, useValue: breakpointObserver}
+        {provide: BreakpointObserver, useValue: breakpointObserver},
+        {provide: ConfigurationService, useValue: MockConfigurationService}
       ]
     })
       .compileComponents();
@@ -62,10 +64,9 @@ describe('HeaderComponent', () => {
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    fixture.debugElement.injector.get(ConfigurationService)
+    TestBed.inject(ConfigurationService)
       .configuration()
-      .pipe(first())
-      .subscribe(value => configuration = value);
+      .subscribe(v => configuration = v);
   }));
 
   it('should create', () => {
@@ -74,7 +75,7 @@ describe('HeaderComponent', () => {
 
   describe('buttons on the header in desktop mode', () => {
     beforeEach(() => {
-      // TODO: I HATE ANGULAR TESTING........ STIL DOESN'T DO ANYTHING
+      // TODO: I HATE ANGULAR TESTING........ STILL DOESN'T DO ANYTHING
       breakpointSpy.and.returnValue(breakpoint(false));
     });
 

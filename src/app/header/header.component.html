@@ -15,35 +15,35 @@
 
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <a [attr.href]="configuration.root.externalWebsiteLink">
+    <a [attr.href]="configuration?.root.externalWebsiteLink">
         <span id="application-logo"
               class="application-logo"
-              [matTooltip]="configuration.root.applicationTitle"
+              [matTooltip]="configuration?.root.applicationTitle"
               [matTooltipShowDelay]="500"
               [matTooltipHideDelay]="200">
-      <img [attr.alt]="configuration.root.applicationTitle + ' Logo'"
-           [attr.src]="configuration.root.applicationLogo"/>
+      <img [attr.alt]="configuration?.root.applicationTitle + ' Logo'"
+           [attr.src]="configuration?.root.applicationLogo"/>
     </span>
     </a>
     <span id="application-title"
           class="application-title"
           [ngClass]="{'application-title-mobile':isMobile,'application-title-desktop':!isMobile}">
-      {{configuration.root.applicationTitle}}
-      <sup class="beta" *ngIf="configuration.root.flags.beta">BETA</sup>
+      {{configuration?.root.applicationTitle}}
+      <sup class="beta" *ngIf="configuration?.root.flags.beta">BETA</sup>
     </span>
     <ng-container *ngIf="!isMobile">
       <button id="twitch-header-btn"
               class="service-provider-btn"
               routerLink="/team-view/team"
               [ngClass]="{'tab-is-active': isActive('team')}"
-              *ngIf="configuration.tabs['team-view'].display"
+              *ngIf="configuration?.tabs['team-view'].display"
               mat-button>NGEN
       </button>
       <button id="tournaments-header-btn"
               class="service-provider-btn"
               routerLink="/team-view/tournament"
               [ngClass]="{'tab-is-active': isActive('tournament')}"
-              *ngIf="configuration.tabs.tournament.display"
+              *ngIf="configuration?.tabs.tournament.display"
               mat-button>WS7 Tournament
       </button>
     </ng-container>

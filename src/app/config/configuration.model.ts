@@ -40,6 +40,5 @@ export interface TabConfiguration {
 export interface ChannelConfiguration {
   readonly id: string;
   readonly platform: string;
-  readonly rank: string | null;
   readonly tabs: string[];
 }

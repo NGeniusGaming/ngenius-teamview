@@ -2,7 +2,7 @@ import {BehaviorSubject, combineLatest, interval, Observable, ReplaySubject} fro
 import {ChannelConfiguration, RootConfiguration, Tab} from '../config/configuration.model';
 import {EMPTY_TWITCH_STREAMS, TwitchStreamsResponse} from './api/twitch-streams.model';
 import {HttpClient} from '@angular/common/http';
-import {map} from 'rxjs/operators';
+import {filter, map} from 'rxjs/operators';
 import {ConfigurationService} from '../config/configuration.service';
 
 export const REFRESH_MINUTES = 1;
@@ -49,12 +49,14 @@ export abstract class TwitchServiceHelper {
       this._twitchApiResults.next(results);
     });
 
-    this._configurationService.configuration().pipe(map(value => value.root))
+    this._configurationService.configuration()
+      .pipe(map(value => value.root))
       .subscribe(value => this._rootConfiguration.next(value));
 
     // Using the latest config and our refresh timer, query twitch.
     combineLatest([this._rootConfiguration, this._refreshTimer]).pipe(
-      map(([root, refreshTimer]) => ({root, refreshTimer}))
+      map(([root, refreshTimer]) => ({root, refreshTimer})),
+      filter(value => !!value.root)
     ).subscribe(v => {
       this._httpClient.get<TwitchStreamsResponse>(`${v.root.apiUrl}${API_PATH}${this._tab}`)
         .subscribe((res: TwitchStreamsResponse) => this._twitchApiBuffer.next(res), error => {

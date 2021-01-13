@@ -1,11 +1,11 @@
-import {async, ComponentFixture, fakeAsync, TestBed, tick, waitForAsync} from '@angular/core/testing';
+import {ComponentFixture, fakeAsync, TestBed, waitForAsync} from '@angular/core/testing';
 
 import {HeaderComponent} from './header.component';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import {MatIconModule} from '@angular/material/icon';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatTooltipModule} from '@angular/material/tooltip';
 import {RouterTestingModule} from '@angular/router/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ConfigurationService} from '../config/configuration.service';
@@ -14,8 +14,8 @@ import {TeamViewDashboardService} from '../team-view/team-view-dashboard.service
 import {MockTwitchDashboardService} from '../test/mocks/twitch-service.mock.spec';
 import {BreakpointObserver, BreakpointState} from '@angular/cdk/layout';
 import {Observable, of} from 'rxjs';
-import Spy = jasmine.Spy;
 import {MockConfigurationService} from '../test/mocks/configuration.mock.spec';
+import Spy = jasmine.Spy;
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;

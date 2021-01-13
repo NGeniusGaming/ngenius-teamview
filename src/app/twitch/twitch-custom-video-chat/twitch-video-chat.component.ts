@@ -22,11 +22,12 @@ export class TwitchVideoChatComponent implements OnInit {
   constructor(
     private _domSanitizer: DomSanitizer,
     @Inject(DOCUMENT) private document: Document
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     // Make the resource a {SafeResourceUrl}
-    this.safeUrl = this._safe( `https://player.twitch.tv/?channel=${this.channel}&muted=true&autoplay=false&parent=${this.parent}`);
+    this.safeUrl = this._safe(`https://player.twitch.tv/?channel=${this.channel}&muted=true&autoplay=false&parent=${this.parent}`);
     this.chatUrl = this._safe(`https://www.twitch.tv/embed/${this.channel}/chat?parent=${this.parent}&darkpopout`);
   }
 

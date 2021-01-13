@@ -1,8 +1,8 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
-import { TournamentDashboardComponent } from './tournament-dashboard.component';
-import { MatCardModule } from '@angular/material/card';
-import { MatGridListModule } from '@angular/material/grid-list';
+import {TournamentDashboardComponent} from './tournament-dashboard.component';
+import {MatCardModule} from '@angular/material/card';
+import {MatGridListModule} from '@angular/material/grid-list';
 import {TwitchVideoChatComponent} from '../../twitch/twitch-custom-video-chat/twitch-video-chat.component';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {MockTournamentDashboardTwitchService} from '../../test/mocks/twitch-service.mock.spec';
@@ -14,13 +14,13 @@ describe('TournamentDashboardComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ TournamentDashboardComponent, TwitchVideoChatComponent ],
+      declarations: [TournamentDashboardComponent, TwitchVideoChatComponent],
       imports: [MatGridListModule, MatCardModule, HttpClientTestingModule],
       providers: [
-        {provide: TournamentDashboardTwitchService , useValue: MockTournamentDashboardTwitchService}
+        {provide: TournamentDashboardTwitchService, useValue: MockTournamentDashboardTwitchService}
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

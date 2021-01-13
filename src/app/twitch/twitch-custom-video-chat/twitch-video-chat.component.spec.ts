@@ -1,7 +1,7 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
-import { TwitchVideoChatComponent } from './twitch-video-chat.component';
-import { MatCardModule } from '@angular/material/card';
+import {TwitchVideoChatComponent} from './twitch-video-chat.component';
+import {MatCardModule} from '@angular/material/card';
 
 describe('TwitchCustomVideoChatComponent', () => {
   let component: TwitchVideoChatComponent;
@@ -9,10 +9,10 @@ describe('TwitchCustomVideoChatComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [ MatCardModule ],
-      declarations: [ TwitchVideoChatComponent ]
+      imports: [MatCardModule],
+      declarations: [TwitchVideoChatComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

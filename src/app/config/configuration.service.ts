@@ -21,7 +21,7 @@ export class ConfigurationService {
 
   constructor(private http: HttpClient) {
     http.get<Partial<Configuration>>(`${this.rootConfigurationPartial?.root?.apiUrl}v1/config`)
-      .pipe(map(partialConfig => ({... this.rootConfigurationPartial, ...partialConfig}) as Configuration))
+      .pipe(map(partialConfig => ({...this.rootConfigurationPartial, ...partialConfig}) as Configuration))
       .subscribe(config => this.configurationSubject.next(config));
   }
 

@@ -10,7 +10,6 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ConfigurationService} from '../config/configuration.service';
 import {Configuration} from '../config/configuration.model';
-import {first, map} from 'rxjs/operators';
 import {TeamViewDashboardService} from '../team-view/team-view-dashboard.service';
 import {MockTwitchDashboardService} from '../test/mocks/twitch-service.mock.spec';
 import {BreakpointObserver, BreakpointState} from '@angular/cdk/layout';

@@ -19,14 +19,14 @@ describe('TwitchService', () => {
   let service: TeamViewDashboardService;
 
   it('should be created', () => {
-    service = TestBed.get(TeamViewDashboardService);
+    service = TestBed.inject(TeamViewDashboardService);
     expect(service).toBeTruthy();
   });
 
   describe('when refreshing twitch data', () => {
     let httpMock: HttpTestingController;
     beforeEach(() => {
-      httpMock = TestBed.get(HttpTestingController);
+      httpMock = TestBed.inject(HttpTestingController);
     });
 
     // this test doesn't work at all.

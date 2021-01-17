@@ -14,11 +14,13 @@ const configuration = {
   },
   channels: [
     {
+      id: '255716703',
       displayName: 'NGeniusGaming',
       platform: 'twitch',
       tabs: ['team-view']
     },
     {
+      id: '29519871',
       displayName: 'wellbornsteak',
       platform: 'twitch',
       tabs: ['tournament']

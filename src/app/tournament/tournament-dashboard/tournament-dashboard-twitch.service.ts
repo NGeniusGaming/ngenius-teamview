@@ -15,7 +15,7 @@ export class TournamentDashboardTwitchService extends TwitchServiceHelper {
   }
 
   public channels(): Observable<string[]> {
-    return this.channels$().pipe(map(value => value.map(channel => channel.id)));
+    return this.channels$().pipe(map(value => value.map(channel => channel.displayName)));
   }
 
 }

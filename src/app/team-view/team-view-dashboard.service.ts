@@ -40,7 +40,7 @@ export class TeamViewDashboardService extends TwitchServiceHelper {
   }
 
   public channels(): Observable<string[]> {
-    return this.channels$().pipe(map(value => value.map(channel => channel.id)));
+    return this.channels$().pipe(map(value => value.map(channel => channel.displayName)));
   }
 
   public filteredChannels(channels: string[]): Observable<string[]> {

@@ -6,6 +6,7 @@ import {map} from 'rxjs/operators';
 import {ThemePalette} from '@angular/material/core';
 import {TeamViewDashboardService} from './team-view-dashboard.service';
 import {Column, Row, TeamViewCardMeasurements} from './twitch-card-measurements.model';
+import {TwitchAggregate} from '../twitch/api/twitch-aggregate-response.model';
 
 @Component({
   selector: 'app-twitch-dashboard',
@@ -15,6 +16,8 @@ import {Column, Row, TeamViewCardMeasurements} from './twitch-card-measurements.
 export class TeamViewDashboardComponent implements OnInit, OnDestroy {
 
   public sizedChannels: TeamViewCardMeasurements[];
+
+  public twitchAggregation: TwitchAggregate[];
 
   private _subscription = new Subscription();
 
@@ -37,14 +40,30 @@ export class TeamViewDashboardComponent implements OnInit, OnDestroy {
     this.breakpoint$ = this._breakpointObserver.observe(Breakpoints.Handset);
 
     this._subscription.add(
+      combineLatest([
+          this._twitchService.twitchAggregation(),
+          this._twitchService.showingOfflineStreams(),
+          this.breakpoint$,
+          this._refreshView
+        ]
+      ).pipe(
+        map((
+          [aggregation, showingOfflineStreams, breakpoint, refresh]) =>
+          ({aggregation, showingOfflineStreams, breakpoint, refresh}))
+      ).subscribe(data => {
+        this.twitchAggregation = data.aggregation;
+      })
+    );
+
+    this._subscription.add(
       combineLatest(
-        [this._twitchService.channels(),
+        [this._twitchService.twitchAggregation(),
           this._twitchService.showingOfflineStreams(),
           this.breakpoint$, this._refreshView]
       ).pipe(
         map(([channels, showingOfflineStreams, breakpoint, refresh]) => ({channels, showingOfflineStreams, breakpoint, refresh}))
       ).subscribe(data => {
-        this._twitchService.filteredChannels(data.channels)
+        this._twitchService.filteredChannels(data.channels.map(v => v.user.display_name))
           .subscribe(channels => this._updateChannelsView(channels, data.breakpoint));
       }));
 

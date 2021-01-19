@@ -1,9 +1,4 @@
-export interface TwitchStreamsResponse {
-  readonly data: TwitchStreamsInfo[];
-  readonly pagination: PaginationInfo;
-}
-
-export interface TwitchStreamsInfo {
+export interface TwitchStream {
   readonly id: string;
   readonly user_id: string;
   readonly user_name: string;
@@ -16,9 +11,3 @@ export interface TwitchStreamsInfo {
   readonly thumbnail_url: string;
   readonly tag_ids: string[];
 }
-
-export interface PaginationInfo {
-  readonly cursor: string;
-}
-
-export const EMPTY_TWITCH_STREAMS: TwitchStreamsResponse = {data: [], pagination: {cursor: ''}};

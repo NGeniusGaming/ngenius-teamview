@@ -8,7 +8,10 @@
         </mat-card-title>
         <mat-card-content class="video-content">
           <div *ngIf="channel" class="video-content">
+            <app-twitch-user-card [details]="null"></app-twitch-user-card>
+<!--
             <app-twitch-video-chat [channel]="channel" [videoPercent]="75"></app-twitch-video-chat>
+-->
           </div>
         </mat-card-content>
       </mat-card>

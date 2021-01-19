@@ -17,6 +17,7 @@ import {TwitchVideoChatComponent} from './twitch/twitch-custom-video-chat/twitch
 import {TeamViewDashboardComponent} from './team-view/team-view-dashboard.component';
 import {HttpClientModule} from '@angular/common/http';
 import {TournamentDashboardComponent} from './tournament/tournament-dashboard/tournament-dashboard.component';
+import { TwitchUserCardComponent } from './twitch/twitch-user-card/twitch-user-card.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import {TournamentDashboardComponent} from './tournament/tournament-dashboard/to
     TwitchVideoChatComponent,
     TeamViewDashboardComponent,
     TournamentDashboardComponent,
+    TwitchUserCardComponent,
   ],
   imports: [
     BrowserModule,

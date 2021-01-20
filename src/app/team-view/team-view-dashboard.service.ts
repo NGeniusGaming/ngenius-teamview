@@ -39,14 +39,14 @@ export class TeamViewDashboardService extends TwitchServiceHelper {
     return this._showingOfflineStreams;
   }
 
-  public channels(): Observable<string[]> {
-    return this.channels$().pipe(map(value => value.map(channel => channel.displayName)));
-  }
-
+  /**
+   * TODO: This method has to be really reworked.
+   * @param channels
+   */
   public filteredChannels(channels: string[]): Observable<string[]> {
     return this._showingOfflineStreams.asObservable()
       .pipe(
-        flatMap(isShowingOffline => isShowingOffline ? of([...channels]) : this.onlineChannelsOnly(channels))
+        flatMap(isShowingOffline => isShowingOffline ? of([...channels]) : of([...channels]))
       );
   }
 }

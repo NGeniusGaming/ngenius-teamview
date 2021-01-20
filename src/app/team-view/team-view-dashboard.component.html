@@ -1,20 +1,15 @@
 <div class="grid-container">
   <mat-grid-list cols="6" rowHeight="187.5px">
-    <mat-grid-tile *ngFor="let channel of sizedChannels; trackBy: trackVideoCards" [colspan]="channel.cols"
-                   [rowspan]="channel.rows">
-      <mat-card class="dashboard-card">
-        <mat-card-title class="card-title">
-          <span>{{channel.channel}}</span>
-          <span class="fill-remaining-space"></span>
-          <span><mat-icon [color]="isPinned(channel.channel)" (click)="pin(channel.channel)">star</mat-icon></span>
-        </mat-card-title>
-        <mat-card-content class="video-content">
-          <div class="video-content">
-            <app-twitch-video-chat [channel]="channel.channel"
-                                   [videoPercent]="calculateVideoPercentage(channel.channel)"></app-twitch-video-chat>
-          </div>
-        </mat-card-content>
-      </mat-card>
+    <mat-grid-tile *ngFor="let channel of twitchAggregation;
+                           let i = index;
+                           trackBy: trackVideoCards"
+                   [colspan]="cardSize(i).cols"
+                   [rowspan]="cardSize(i).rows">
+      <div class="video-content">
+        <app-twitch-user-card [details]="channel"
+                              [feedbackLoop]="channelFeedbackLoop"
+                              (channelInteraction)="receiveChannelInteraction($event)"></app-twitch-user-card>
+      </div>
     </mat-grid-tile>
   </mat-grid-list>
 </div>

@@ -3,9 +3,10 @@ import {ConfigurationService} from '../config/configuration.service';
 import {BehaviorSubject, combineLatest, Observable, Subscription} from 'rxjs';
 import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/layout';
 import {map} from 'rxjs/operators';
-import {ThemePalette} from '@angular/material/core';
 import {TeamViewDashboardService} from './team-view-dashboard.service';
-import {Column, Row, TeamViewCardMeasurements} from './twitch-card-measurements.model';
+import {Column, Row} from './twitch-card-measurements.model';
+import {TwitchAggregate} from '../twitch/api/twitch-aggregate-response.model';
+import {TwitchChannelInteraction, TwitchChannelInteractionFeedbackLoop} from '../twitch/twitch-user-card/twitch-channel-interaction.model';
 
 @Component({
   selector: 'app-twitch-dashboard',
@@ -14,13 +15,21 @@ import {Column, Row, TeamViewCardMeasurements} from './twitch-card-measurements.
 })
 export class TeamViewDashboardComponent implements OnInit, OnDestroy {
 
-  public sizedChannels: TeamViewCardMeasurements[];
+  public twitchAggregation: TwitchAggregate[];
 
   private _subscription = new Subscription();
 
-  private _pinnedChannels: string[] = [];
+  private pinnedChannels: string[] = [];
+  private showingChat: string[] = [];
+
+  public channelFeedbackLoop
+    = new BehaviorSubject<TwitchChannelInteractionFeedbackLoop>(
+      new TwitchChannelInteractionFeedbackLoop(this.pinnedChannels, this.showingChat)
+  );
 
   private breakpoint$: Observable<BreakpointState>;
+
+  private isSmallScreen = false;
 
   /**
    * Used to force a refresh of the dashboard.
@@ -37,109 +46,61 @@ export class TeamViewDashboardComponent implements OnInit, OnDestroy {
     this.breakpoint$ = this._breakpointObserver.observe(Breakpoints.Handset);
 
     this._subscription.add(
-      combineLatest(
-        [this._twitchService.channels(),
-          this._twitchService.showingOfflineStreams(),
-          this.breakpoint$, this._refreshView]
-      ).pipe(
-        map(([channels, showingOfflineStreams, breakpoint, refresh]) => ({channels, showingOfflineStreams, breakpoint, refresh}))
-      ).subscribe(data => {
-        this._twitchService.filteredChannels(data.channels)
-          .subscribe(channels => this._updateChannelsView(channels, data.breakpoint));
-      }));
+      this.breakpoint$.subscribe(value => this.isSmallScreen = value.matches)
+    );
 
+    this._subscription.add(
+      this.channelFeedbackLoop.subscribe(() => this.syntheticSort())
+    )
+
+    this._subscription.add(
+      combineLatest([
+          this._twitchService.twitchAggregation(),
+          this._twitchService.showingOfflineStreams(),
+          this.breakpoint$,
+          this._refreshView
+        ]
+      ).pipe(
+        map((
+          [aggregation, showingOfflineStreams, breakpoint, refresh]) =>
+          ({aggregation, showingOfflineStreams, breakpoint, refresh}))
+      ).subscribe(data => {
+        if (data.showingOfflineStreams) {
+          this.twitchAggregation = data.aggregation;
+        } else {
+          this.twitchAggregation = data.aggregation.filter(value => value.live);
+        }
+      })
+    );
   }
 
   ngOnDestroy() {
     this._subscription.unsubscribe();
   }
 
-  trackVideoCards(_: number, item: TeamViewCardMeasurements): string {
+  trackVideoCards(_: number, item: TwitchAggregate): string {
     if (!item) {
       return null;
     }
-    return item.channel;
-  }
-
-  public pin(channel: string) {
-    let currentPins = [...this._pinnedChannels];
-    const index = currentPins.indexOf(channel);
-    if (index > -1) {
-      // remove the item from the pinned channels
-      currentPins.splice(index, 1);
-    } else {
-      // add the channel to the front of the array
-      currentPins = [channel, ...currentPins.slice(0, 1)];
-    }
-    this._pinnedChannels = currentPins;
-    this._refreshView.next(undefined);
-  }
-
-  private _updateChannelsView(channels: string[], breakpoint: BreakpointState) {
-    // first, resort the channels
-    const updatedChannels = [...channels].sort((a, b) => this.weightOfPin(b) - this.weightOfPin(a))
-      .map(((value, index) => this.setCardAndVideoSize(value, index, breakpoint.matches)));
-    if (JSON.stringify(this.sizedChannels) !== JSON.stringify(updatedChannels)) {
-      // if the sized channels have changed in some way, re-set them, which causes them to reload.
-      this.sizedChannels = updatedChannels;
-    }
-  }
-
-  /**
-   * translate a place in the pinned channels array to a weight for the card location on the screen.
-   * @param channel to calculate the weight of.
-   */
-  private weightOfPin(channel: string): number {
-    const index = this._pinnedChannels.indexOf(channel);
-    switch (index) {
-      case (0):
-        return 2;
-      case(1):
-        return 1;
-      default:
-        return 0;
-    }
-  }
-
-  /**
-   * If a video is pinned, we shrink the video to 75% to
-   * display the chat window. Othwerise, the video uses
-   * 100% of the card's space.
-   *
-   * @param channel to determine video percentage
-   * @returns twitch video card percentage
-   */
-  calculateVideoPercentage(channel: string): number {
-    return !!this.isPinned(channel) ? 75 : 100;
-  }
-
-  /**
-   * Returns the correct ThemePalette for if the channel is pinned or not
-   * @param channel to check if it is pinned.
-   */
-  isPinned(channel: string): ThemePalette {
-    return this._pinnedChannels.indexOf(channel) > -1 ? 'accent' : undefined;
+    return `${item.user.display_name}_live:${item.live}`;
   }
 
   /**
    * If the screen is small, make all cards the whole width and one row
    * If the screen is larger, make the headlining card bigger and the rest small
-   * @param channel - the channel that will eventually be shown
    * @param index - the channel's place on the dashboard
-   * @param isSmallScreen - whether or not we are on a phone
    */
-  setCardAndVideoSize(channel: string, index: number, isSmallScreen: boolean): TeamViewCardMeasurements {
+  cardSize(index: number): { cols, rows } {
     let cols: Column;
     let rows: Row;
 
-    if (isSmallScreen) {
+    if (this.isSmallScreen) {
       [cols, rows] = [6, 2];
     } else {
       [cols, rows] = this.calculateCardSizeForDesktop(index);
     }
 
     return {
-      channel,
       cols,
       rows
     };
@@ -151,13 +112,46 @@ export class TeamViewDashboardComponent implements OnInit, OnDestroy {
    * @returns the column and row calculation for this card
    */
   calculateCardSizeForDesktop(index: number): [Column, Row] {
-    const multiPins = this._pinnedChannels.length > 1;
+    const multiPins = this.pinnedChannels.length > 1;
 
     if (multiPins) {
       return (index < 2) ? [3, 3] : [2, 2];
     } else {
       return (index < 1) ? [6, 4] : [2, 2];
     }
+  }
+
+  public receiveChannelInteraction(interaction: TwitchChannelInteraction) {
+    if (interaction.pinned) {
+      this.pinnedChannels = [interaction.id, ...this.pinnedChannels].slice(0, 2);
+    } else {
+      const index = this.pinnedChannels.indexOf(interaction.id);
+      this.pinnedChannels.splice(index, 1);
+    }
+    // gives us framework to show chat separate from pins.
+    this.showingChat = this.pinnedChannels;
+
+    this.channelFeedbackLoop.next(new TwitchChannelInteractionFeedbackLoop(this.pinnedChannels, this.showingChat));
+  }
+
+  private syntheticSort() {
+    if (!this.twitchAggregation) { return; }
+
+    const copy = [...this.twitchAggregation];
+
+    // these are ids
+    const first = this.pinnedChannels.length > 0 ? this.pinnedChannels[0] : null;
+    const second = this.pinnedChannels.length > 1 ? this.pinnedChannels[1] : null;
+
+    const firstChannel = !!first ? copy.find(value => value.user.id === first) : null;
+    const secondChannel = !!second ? copy.find(value => value.user.id === second) : null;
+
+    const top = [firstChannel, secondChannel].filter(value => !!value);
+
+    const bottom = copy.filter(value => top.indexOf(value) === -1);
+    bottom.sort( (a, b) => a.index - b.index);
+
+    this.twitchAggregation = [...top, ...bottom];
   }
 
 }

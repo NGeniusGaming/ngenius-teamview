@@ -28,20 +28,5 @@ describe('TwitchService', () => {
     beforeEach(() => {
       httpMock = TestBed.inject(HttpTestingController);
     });
-
-    // this test doesn't work at all.
-    xit('should refresh twitch data periodically', fakeAsync(() => {
-      service.channels().pipe(first()).subscribe(result => expect(result).toBeTruthy());
-      const mockRequest = httpMock.expectOne(req => req.url.startsWith(''));
-      tick(REFRESH_MINUTES * 1.5 * 1000 * 60);
-
-      expect(mockRequest.cancelled).toBeFalsy();
-
-      mockRequest.flush({data: [], pagination: {cursor: ''}});
-
-      tick(50000);
-      httpMock.verify();
-    }));
-
   });
 });

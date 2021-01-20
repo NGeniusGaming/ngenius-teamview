@@ -1,0 +1,32 @@
+<div class="container">
+  <ng-container *ngIf="details.live; else offline">
+    <iframe
+      [src]="videoUrl"
+      height="100%"
+      [width]="videoWidth + '%'"
+      frameborder="0"
+      scrolling="no"
+      allowfullscreen="false">
+    </iframe>
+    <iframe *ngIf="showChat"
+            [src]="chatUrl"
+            id="{{details?.stream?.user_name}}"
+            height="100%"
+            [width]="chatWidth + '%'"
+            frameborder="0"
+            scrolling="yes">
+    </iframe>
+  </ng-container>
+  <ng-template #offline>
+    <!-- TODO: not all users have an offline image -->
+    <img [src]="offlineImageUrl"
+         alt="Offline image for {{details.user.display_name}}."
+         class="offline-image"/>
+  </ng-template>
+  <!-- Show this content in the top-left / top-right of the container always. -->
+  <div *ngIf="!details.live"
+       class="top-left streamer-name">{{details.user.display_name}}</div>
+  <div class="top-right">
+    <mat-icon [color]="isPinned()" (click)="pin()">star</mat-icon>
+  </div>
+</div>

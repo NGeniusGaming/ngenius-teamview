@@ -1,22 +1,11 @@
 <div class="grid-container">
   <mat-grid-list cols="6" rowHeight="187.5px">
     <!-- TODO: need to get sizing working again -->
-    <mat-grid-tile *ngFor="let channel of twitchAggregation" [colspan]="2"
+    <mat-grid-tile *ngFor="let channel of twitchAggregation; trackBy: trackVideoCards" [colspan]="2"
                    [rowspan]="2">
-      <mat-card class="dashboard-card">
-        <mat-card-title class="card-title">
-          <span>{{channel.user.display_name}}</span>
-          <span class="fill-remaining-space"></span>
-          <span><mat-icon [color]="isPinned('todo')" (click)="pin('todo')">star</mat-icon></span>
-        </mat-card-title>
-        <mat-card-content class="video-content">
           <div class="video-content">
             <app-twitch-user-card [details]="channel"></app-twitch-user-card>
-            <!--<app-twitch-video-chat [channel]="channel.user.display_name"
-                                   [videoPercent]="calculateVideoPercentage('todo')"></app-twitch-video-chat>-->
           </div>
-        </mat-card-content>
-      </mat-card>
     </mat-grid-tile>
   </mat-grid-list>
 </div>

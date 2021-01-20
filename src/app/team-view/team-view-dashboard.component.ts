@@ -73,11 +73,11 @@ export class TeamViewDashboardComponent implements OnInit, OnDestroy {
     this._subscription.unsubscribe();
   }
 
-  trackVideoCards(_: number, item: TeamViewCardMeasurements): string {
+  trackVideoCards(_: number, item: TwitchAggregate): string {
     if (!item) {
       return null;
     }
-    return item.channel;
+    return `${item.user.display_name}_live:${item.live}`;
   }
 
   public pin(channel: string) {

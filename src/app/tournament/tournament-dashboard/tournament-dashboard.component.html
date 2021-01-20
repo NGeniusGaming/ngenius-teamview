@@ -2,7 +2,9 @@
   <mat-grid-list cols="2" rowHeight="433px">
     <mat-grid-tile *ngFor="let channel of twitchAggregation" [colspan]="1" [rowspan]="1">
           <div class="video-content">
-            <app-twitch-user-card [details]="channel"></app-twitch-user-card>
+            <app-twitch-user-card [details]="channel"
+                                  [feedbackLoop]="channelFeedbackLoop"
+                                  (channelInteraction)="receiveChannelInteraction($event)"></app-twitch-user-card>
           </div>
     </mat-grid-tile>
   </mat-grid-list>

@@ -1,11 +1,15 @@
 <div class="grid-container">
   <mat-grid-list cols="6" rowHeight="187.5px">
-    <!-- TODO: need to get sizing working again -->
-    <mat-grid-tile *ngFor="let channel of twitchAggregation; trackBy: trackVideoCards" [colspan]="2"
-                   [rowspan]="2">
-          <div class="video-content">
-            <app-twitch-user-card [details]="channel"></app-twitch-user-card>
-          </div>
+    <mat-grid-tile *ngFor="let channel of twitchAggregation;
+                           let i = index;
+                           trackBy: trackVideoCards"
+                   [colspan]="cardSize(i).cols"
+                   [rowspan]="cardSize(i).rows">
+      <div class="video-content">
+        <app-twitch-user-card [details]="channel"
+                              [feedbackLoop]="channelFeedbackLoop"
+                              (channelInteraction)="receiveChannelInteraction($event)"></app-twitch-user-card>
+      </div>
     </mat-grid-tile>
   </mat-grid-list>
 </div>

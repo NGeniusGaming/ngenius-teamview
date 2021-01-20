@@ -1,8 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TournamentDashboardTwitchService} from './tournament-dashboard-twitch.service';
-import {Observable, Subscription} from 'rxjs';
+import {BehaviorSubject, Observable, Subscription} from 'rxjs';
 import {BreakpointObserver, Breakpoints, BreakpointState} from '@angular/cdk/layout';
 import {TwitchAggregate} from '../../twitch/api/twitch-aggregate-response.model';
+import {
+  TwitchChannelInteraction,
+  TwitchChannelInteractionFeedbackLoop
+} from '../../twitch/twitch-user-card/twitch-channel-interaction.model';
 
 @Component({
   selector: 'app-tournament-dashboard',
@@ -17,6 +21,11 @@ export class TournamentDashboardComponent implements OnInit, OnDestroy {
 
   public rows = 1;
   public columns = 1;
+
+  public channelFeedbackLoop
+    = new BehaviorSubject<TwitchChannelInteractionFeedbackLoop>(
+    new TwitchChannelInteractionFeedbackLoop([], [])
+  );
 
   private _subscription = new Subscription();
   private _breakpoint$: Observable<BreakpointState>;
@@ -48,4 +57,7 @@ export class TournamentDashboardComponent implements OnInit, OnDestroy {
     this._subscription.unsubscribe();
   }
 
+  public receiveChannelInteraction(interaction: TwitchChannelInteraction) {
+    console.warn('Unimplemented');
+  }
 }

@@ -13,7 +13,6 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
-import {TwitchVideoChatComponent} from './twitch/twitch-custom-video-chat/twitch-video-chat.component';
 import {TeamViewDashboardComponent} from './team-view/team-view-dashboard.component';
 import {HttpClientModule} from '@angular/common/http';
 import {TournamentDashboardComponent} from './tournament/tournament-dashboard/tournament-dashboard.component';
@@ -23,7 +22,6 @@ import { TwitchUserCardComponent } from './twitch/twitch-user-card/twitch-user-c
   declarations: [
     AppComponent,
     HeaderComponent,
-    TwitchVideoChatComponent,
     TeamViewDashboardComponent,
     TournamentDashboardComponent,
     TwitchUserCardComponent,

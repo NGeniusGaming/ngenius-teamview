@@ -1,7 +1,6 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 
 import {TeamViewDashboardComponent} from './team-view-dashboard.component';
-import {TwitchVideoChatComponent} from '../twitch/twitch-custom-video-chat/twitch-video-chat.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatIconModule} from '@angular/material/icon';
@@ -14,7 +13,7 @@ describe('TwitchDashboardComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [MatCardModule, MatGridListModule, MatIconModule, HttpClientTestingModule],
-      declarations: [TeamViewDashboardComponent, TwitchVideoChatComponent]
+      declarations: [TeamViewDashboardComponent]
     })
       .compileComponents();
   }));

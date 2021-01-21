@@ -17,7 +17,7 @@ export class TeamViewDashboardComponent implements OnInit, OnDestroy {
 
   public twitchAggregation: TwitchAggregate[];
 
-  private _subscription = new Subscription();
+  private subscription = new Subscription();
 
   private pinnedChannels: string[] = [];
   private showingChat: string[] = [];
@@ -31,51 +31,59 @@ export class TeamViewDashboardComponent implements OnInit, OnDestroy {
 
   private isSmallScreen = false;
 
-  /**
-   * Used to force a refresh of the dashboard.
-   */
-  private _refreshView: BehaviorSubject<undefined> = new BehaviorSubject<undefined>(undefined);
-
-  constructor(private _configurationService: ConfigurationService,
-              private _twitchService: TeamViewDashboardService,
-              private _breakpointObserver: BreakpointObserver) {
+  constructor(private twitchService: TeamViewDashboardService,
+              private breakpointObserver: BreakpointObserver) {
   }
 
   ngOnInit() {
 
-    this.breakpoint$ = this._breakpointObserver.observe(Breakpoints.Handset);
+    this.breakpoint$ = this.breakpointObserver.observe(Breakpoints.Handset);
 
-    this._subscription.add(
+    this.subscription.add(
       this.breakpoint$.subscribe(value => this.isSmallScreen = value.matches)
     );
 
-    this._subscription.add(
+    this.subscription.add(
       this.channelFeedbackLoop.subscribe(() => this.syntheticSort())
-    )
+    );
 
-    this._subscription.add(
+    this.subscription.add(
       combineLatest([
-          this._twitchService.twitchAggregation(),
-          this._twitchService.showingOfflineStreams(),
-          this.breakpoint$,
-          this._refreshView
+        this.twitchService.pinnedChannelsObservable(),
+        this.twitchService.showingChatObservable()
+      ]).pipe(
+        map(([pinnedChannels, showingChat]) => ({pinnedChannels, showingChat}))
+      ).subscribe(data => {
+        this.pinnedChannels = data.pinnedChannels;
+        this.showingChat = data.showingChat;
+
+        this.channelFeedbackLoop.next(new TwitchChannelInteractionFeedbackLoop(this.pinnedChannels, this.showingChat));
+      })
+    );
+
+    this.subscription.add(
+      combineLatest([
+          this.twitchService.twitchAggregation(),
+          this.twitchService.isShowingOfflineStreams(),
+          this.breakpoint$
         ]
       ).pipe(
         map((
-          [aggregation, showingOfflineStreams, breakpoint, refresh]) =>
-          ({aggregation, showingOfflineStreams, breakpoint, refresh}))
+          [aggregation, showingOfflineStreams, breakpoint]) =>
+          ({aggregation, showingOfflineStreams, breakpoint}))
       ).subscribe(data => {
         if (data.showingOfflineStreams) {
           this.twitchAggregation = data.aggregation;
         } else {
           this.twitchAggregation = data.aggregation.filter(value => value.live);
         }
+        this.syntheticSort();
       })
     );
   }
 
   ngOnDestroy() {
-    this._subscription.unsubscribe();
+    this.subscription.unsubscribe();
   }
 
   trackVideoCards(_: number, item: TwitchAggregate): string {
@@ -122,16 +130,17 @@ export class TeamViewDashboardComponent implements OnInit, OnDestroy {
   }
 
   public receiveChannelInteraction(interaction: TwitchChannelInteraction) {
-    if (interaction.pinned) {
-      this.pinnedChannels = [interaction.id, ...this.pinnedChannels].slice(0, 2);
-    } else {
-      const index = this.pinnedChannels.indexOf(interaction.id);
-      this.pinnedChannels.splice(index, 1);
-    }
-    // gives us framework to show chat separate from pins.
-    this.showingChat = this.pinnedChannels;
-
-    this.channelFeedbackLoop.next(new TwitchChannelInteractionFeedbackLoop(this.pinnedChannels, this.showingChat));
+    this.twitchService.channelInteraction(interaction);
+    // if (interaction.pinned) {
+    //   this.pinnedChannels = [interaction.id, ...this.pinnedChannels].slice(0, 2);
+    // } else {
+    //   const index = this.pinnedChannels.indexOf(interaction.id);
+    //   this.pinnedChannels.splice(index, 1);
+    // }
+    // // gives us framework to show chat separate from pins.
+    // this.showingChat = this.pinnedChannels;
+    //
+    // this.channelFeedbackLoop.next(new TwitchChannelInteractionFeedbackLoop(this.pinnedChannels, this.showingChat));
   }
 
   private syntheticSort() {

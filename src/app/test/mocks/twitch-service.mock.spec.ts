@@ -5,7 +5,7 @@ import createSpyObj = jasmine.createSpyObj;
 
 // tslint:disable-next-line:variable-name
 export const MockTwitchDashboardService: TeamViewDashboardService = createSpyObj('TwitchDashboardService', {
-  showingOfflineStreams: of(true)
+  isShowingOfflineStreams: of(true)
 });
 
 // tslint:disable-next-line:variable-name

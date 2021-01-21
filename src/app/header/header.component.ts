@@ -64,7 +64,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     this._subscription.add(
       this._twitchService
-        .showingOfflineStreams()
+        .isShowingOfflineStreams()
         .subscribe(next => this.twitchOfflineChecked = next)
     );
   }

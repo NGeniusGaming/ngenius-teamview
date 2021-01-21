@@ -15,8 +15,6 @@ import {
 })
 export class TournamentDashboardComponent implements OnInit, OnDestroy {
 
-  public twitchChannels: string[] = [];
-
   public twitchAggregation: TwitchAggregate[] = [];
 
   public rows = 1;
@@ -40,8 +38,6 @@ export class TournamentDashboardComponent implements OnInit, OnDestroy {
     this._subscription.add(
       this._tournamentDashboardTwitchService.twitchAggregation().subscribe(value => this.twitchAggregation = value)
     );
-    // TODO: delete.
-    this._subscription.add(this._tournamentDashboardTwitchService.twitchAggregation().subscribe(channels => this.twitchChannels = channels.map(v => v.user.display_name)));
 
     this._subscription.add(this._breakpoint$.subscribe(breakpoint => {
       // if it matches, we have a handset, else, a bigger screen
@@ -59,5 +55,10 @@ export class TournamentDashboardComponent implements OnInit, OnDestroy {
 
   public receiveChannelInteraction(interaction: TwitchChannelInteraction) {
     console.warn('Unimplemented');
+  }
+
+  public trackChannel(aggregation: TwitchAggregate): string {
+    if (!aggregation?.user) { return ''; }
+    return `${aggregation.user.id}_live:${aggregation.live}`;
   }
 }

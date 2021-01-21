@@ -1,24 +1,31 @@
 import {Injectable} from '@angular/core';
-import {Observable, of, ReplaySubject} from 'rxjs';
+import {BehaviorSubject, Observable, ReplaySubject} from 'rxjs';
 import {MatSlideToggleChange} from '@angular/material/slide-toggle';
 import {ConfigurationService} from '../config/configuration.service';
-import {first, flatMap, map} from 'rxjs/operators';
+import {first} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {TwitchServiceHelper} from '../twitch/twitch-service.helper';
+import {TwitchChannelInteraction} from '../twitch/twitch-user-card/twitch-channel-interaction.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TeamViewDashboardService extends TwitchServiceHelper {
 
-  private _showingOfflineStreams: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
+  private showingOfflineStreams: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
 
-  constructor(_configurationService: ConfigurationService,
-              _httpClient: HttpClient) {
-    super('team-view', _configurationService, _httpClient);
+  private pinnedChannels: string[] = [];
+  private showingChat: string[] = [];
+
+  private pinnedChannelsSubject: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
+  private showingChatSubject: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
+
+  constructor(configurationService: ConfigurationService,
+              httpClient: HttpClient) {
+    super('team-view', configurationService, httpClient);
     this.anyOnline()
       .pipe(first())
-      .subscribe(value => this._showingOfflineStreams.next(!value));
+      .subscribe(value => this.showingOfflineStreams.next(!value));
   }
 
   /**
@@ -29,24 +36,54 @@ export class TeamViewDashboardService extends TwitchServiceHelper {
    * @param event - the {MatSlideToggleChange} event for the toggle
    */
   public showOfflineStreamsToggle(event: MatSlideToggleChange) {
-    this._showingOfflineStreams.next(event.checked);
+    this.showingOfflineStreams.next(event.checked);
   }
 
   /**
    * Return the observable to whether or not we are showing offline streams.
    */
-  public showingOfflineStreams(): Observable<boolean> {
-    return this._showingOfflineStreams;
+  public isShowingOfflineStreams(): Observable<boolean> {
+    return this.showingOfflineStreams;
   }
 
   /**
-   * TODO: This method has to be really reworked.
-   * @param channels
+   * Returns a hook to watch which channels are pinned.
    */
-  public filteredChannels(channels: string[]): Observable<string[]> {
-    return this._showingOfflineStreams.asObservable()
-      .pipe(
-        flatMap(isShowingOffline => isShowingOffline ? of([...channels]) : of([...channels]))
-      );
+  public pinnedChannelsObservable(): Observable<string[]> {
+    return this.pinnedChannelsSubject.asObservable();
+  }
+
+  /**
+   * Returns a hook to watch which channels are showing their chat.
+   */
+  public showingChatObservable(): Observable<string[]> {
+    return this.showingChatSubject.asObservable();
+  }
+
+  /**
+   * Keep track of channel interactions at this service level so they persist even if the user leaves
+   * the tab and comes back.
+   * @param interaction - which channel was touched and what changed.
+   */
+  public channelInteraction(interaction: TwitchChannelInteraction) {
+    if (interaction.pinned) {
+      this.pinnedChannels = [interaction.id, ...this.pinnedChannels].slice(0, 2);
+    } else {
+      const index = this.pinnedChannels.indexOf(interaction.id);
+      this.pinnedChannels.splice(index, 1);
+    }
+    // gives us framework to show chat separate from pins.
+    this.showingChat = this.pinnedChannels;
+
+    this.pushUpdates();
+  }
+
+  /**
+   * Update things that need to change when a channel is updated.
+   * @private
+   */
+  private pushUpdates() {
+    this.pinnedChannelsSubject.next(this.pinnedChannels);
+    this.showingChatSubject.next(this.showingChat);
   }
 }

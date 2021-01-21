@@ -1,6 +1,9 @@
 <div class="grid-container">
   <mat-grid-list cols="2" rowHeight="433px">
-    <mat-grid-tile *ngFor="let channel of twitchAggregation" [colspan]="1" [rowspan]="1">
+    <mat-grid-tile *ngFor="let channel of twitchAggregation;
+                           trackBy trackChannel"
+                   [colspan]="columns"
+                   [rowspan]="rows">
           <div class="video-content">
             <app-twitch-user-card [details]="channel"
                                   [feedbackLoop]="channelFeedbackLoop"

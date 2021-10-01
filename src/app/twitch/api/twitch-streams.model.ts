@@ -3,6 +3,7 @@ export interface TwitchStream {
   readonly user_id: string;
   readonly user_name: string;
   readonly game_id: string;
+  readonly game_name: string;
   readonly type: string;
   readonly title: string;
   readonly viewer_count: number;

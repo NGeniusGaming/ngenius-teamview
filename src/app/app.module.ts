@@ -17,6 +17,7 @@ import {TeamViewDashboardComponent} from './team-view/team-view-dashboard.compon
 import {HttpClientModule} from '@angular/common/http';
 import {TournamentDashboardComponent} from './tournament/tournament-dashboard/tournament-dashboard.component';
 import { TwitchUserCardComponent } from './twitch/twitch-user-card/twitch-user-card.component';
+import {MatChipsModule} from '@angular/material/chips';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { TwitchUserCardComponent } from './twitch/twitch-user-card/twitch-user-c
     MatGridListModule,
     MatIconModule,
     MatSlideToggleModule,
-    MatMenuModule
+    MatMenuModule,
+    MatChipsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

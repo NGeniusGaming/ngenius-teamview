@@ -97,4 +97,35 @@ export class TwitchUserCardComponent implements OnInit, OnDestroy {
     return 100 - this.videoWidth;
   }
 
+  public get footerContent(): FooterContent {
+    if (this.details.live) {
+      return {
+        title: this.details.stream?.title,
+        metadata: [
+          this.details.user.display_name,
+          this.details.stream?.game_name
+        ],
+        chips: [
+          this.details.stream?.language,
+          this.details.stream?.viewer_count
+        ]
+      };
+    } else {
+      return {
+        title: this.details.user.display_name,
+        metadata: [],
+        chips: [
+          this.details.user.broadcaster_type
+        ]
+      };
+    }
+  }
+
+}
+
+interface FooterContent {
+  title: string;
+  // todo: these can be strings or numbers.
+  metadata: any[];
+  chips: any[];
 }

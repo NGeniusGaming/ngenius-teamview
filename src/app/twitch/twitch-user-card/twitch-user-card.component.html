@@ -30,3 +30,20 @@
     <mat-icon [color]="isPinned()" (click)="pin()">star</mat-icon>
   </div>
 </div>
+<!-- display the footer content -->
+<ng-template [ngTemplateOutlet]="footer"
+             [ngTemplateOutletContext]="{footerContent: footerContent}"></ng-template>
+<!-- set up a template to render the parts of the footer -->
+<ng-template #footer let-content="footerContent">
+  <div class="footer">
+    <p class="footer-title">{{content.title}}</p>
+    <ng-container *ngFor="let meta of content.metadata">
+      <p class="metadata">{{meta}}</p>
+    </ng-container>
+    <mat-chip-list>
+      <ng-container *ngFor="let chip of content.chips">
+        <mat-chip color="accent" selected>{{chip}}</mat-chip>
+      </ng-container>
+    </mat-chip-list>
+  </div>
+</ng-template>

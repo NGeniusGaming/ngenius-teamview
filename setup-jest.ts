@@ -26,5 +26,20 @@ Object.defineProperty(document.body.style, 'transform', {
   },
 });
 
+const WARN_SUPPRESSING_PATTERNS = [
+  /Could not find Angular Material core theme/,
+  /Could not find HammerJS/,
+];
+
+const warn = console.warn;
+
+Object.defineProperty(console, 'warn', {
+  value: (...params: string[]) => {
+    if (!WARN_SUPPRESSING_PATTERNS.some((pattern) => pattern.test(params[0]))) {
+      warn(...params);
+    }
+  }
+});
+
 /* output shorter and more meaningful Zone error stack traces */
 // Error.stackTraceLimit = 2;

@@ -2,6 +2,10 @@ import {of} from 'rxjs';
 import {Configuration} from '../../config/configuration.model';
 import ConfigurationJson from '../../../assets/configuration/config.json';
 
+describe('ConfigurationMock', () => {
+  it('should have a no-op test?', () => {});
+});
+
 const configuration = {
   ...ConfigurationJson,
   tabs: {
@@ -30,5 +34,5 @@ const configuration = {
 
 // tslint:disable-next-line:variable-name
 export const MockConfigurationService = {
-  configuration: jasmine.createSpy('configuration').and.returnValue(of(configuration))
+  configuration: jest.fn(() => of(configuration))
 };

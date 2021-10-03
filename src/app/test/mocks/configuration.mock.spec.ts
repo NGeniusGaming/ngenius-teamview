@@ -7,7 +7,15 @@ describe('ConfigurationMock', () => {
 });
 
 const configuration = {
-  ...ConfigurationJson,
+  root: {
+    applicationLogo: 'assets/ngen.png',
+    applicationTitle: 'NGenius Gaming Team View',
+    externalWebsiteLink: 'https://www.ngeniusgaming.com/',
+    apiUrl: 'https://api.ngeniusgaming.us/',
+    flags: {
+      beta: true
+    }
+  },
   tabs: {
     'team-view': {
       display: true

@@ -12,4 +12,6 @@ export const MockTwitchDashboardService: Partial<TeamViewDashboardService> = {
 };
 
 // tslint:disable-next-line:variable-name
-export const MockTournamentDashboardTwitchService: Partial<TournamentDashboardTwitchService> = { };
+export const MockTournamentDashboardTwitchService: Partial<TournamentDashboardTwitchService> = {
+  twitchAggregation: jest.fn(() => of([]))
+};

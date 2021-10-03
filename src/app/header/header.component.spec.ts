@@ -71,7 +71,7 @@ describe('HeaderComponent', () => {
   });
 
   it('should have ngenius gaming as the title', () => {
-    const title = fixture.debugElement.nativeElement.querySelector('#application-title').innerText;
+    const title = fixture.nativeElement.querySelector('#application-title').textContent.trim();
     const expectedTitle = configuration.root.flags.beta
       ? configuration.root.applicationTitle + ' BETA'
       : configuration.root.applicationTitle;

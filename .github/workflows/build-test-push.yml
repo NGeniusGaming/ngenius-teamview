@@ -37,4 +37,4 @@ jobs:
           npm install -g @angular/cli
           npm ci
           ng build --aot
-          ng test --watch=false --browsers=ChromeNoSandboxHeadless
+          ng test

@@ -2,8 +2,20 @@ import {of} from 'rxjs';
 import {Configuration} from '../../config/configuration.model';
 import ConfigurationJson from '../../../assets/configuration/config.json';
 
+describe('ConfigurationMock', () => {
+  it('should have a no-op test?', () => {});
+});
+
 const configuration = {
-  ...ConfigurationJson,
+  root: {
+    applicationLogo: 'assets/ngen.png',
+    applicationTitle: 'NGenius Gaming Team View',
+    externalWebsiteLink: 'https://www.ngeniusgaming.com/',
+    apiUrl: 'https://api.ngeniusgaming.us/',
+    flags: {
+      beta: true
+    }
+  },
   tabs: {
     'team-view': {
       display: true
@@ -30,5 +42,5 @@ const configuration = {
 
 // tslint:disable-next-line:variable-name
 export const MockConfigurationService = {
-  configuration: jasmine.createSpy('configuration').and.returnValue(of(configuration))
+  configuration: jest.fn(() => of(configuration))
 };

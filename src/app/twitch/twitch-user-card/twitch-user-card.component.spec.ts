@@ -3,6 +3,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {TwitchUserCardComponent} from './twitch-user-card.component';
 import {BehaviorSubject} from 'rxjs';
 import {TwitchChannelInteractionFeedbackLoop} from './twitch-channel-interaction.model';
+import {MatIconModule} from '@angular/material/icon';
 
 describe('TwitchUserCardComponent', () => {
   let component: TwitchUserCardComponent;
@@ -10,7 +11,10 @@ describe('TwitchUserCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TwitchUserCardComponent]
+      declarations: [TwitchUserCardComponent],
+      imports: [
+        MatIconModule
+      ]
     })
       .compileComponents();
   });

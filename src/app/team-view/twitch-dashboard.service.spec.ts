@@ -28,5 +28,9 @@ describe('TwitchService', () => {
     beforeEach(() => {
       httpMock = TestBed.inject(HttpTestingController);
     });
+
+    it('should remember what test was intended here... 😬', () => {
+      expect(service).toBeTruthy();
+    });
   });
 });

@@ -25,6 +25,7 @@ jobs:
           npm install -g @angular/cli
           npm ci
           ng deploy --cname=ngeniusesports.com --repo=https://github.com/NGeniusGaming/NGeniusGaming.github.io.git --name=NGeniusGaming --email=$EMAIL --message="Built from ${GITHUB_SHA} in the source repository." --branch=master
+          ng test
         env:
           CI: true
           GH_TOKEN: ${{ secrets.GithubToken }}

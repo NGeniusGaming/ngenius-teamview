@@ -15,7 +15,6 @@ import {MockTwitchDashboardService} from '../test/mocks/twitch-service.mock.spec
 import {BreakpointObserver, BreakpointState} from '@angular/cdk/layout';
 import {Observable, of} from 'rxjs';
 import {MockConfigurationService} from '../test/mocks/configuration.mock.spec';
-import Spy = jasmine.Spy;
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -26,17 +25,8 @@ describe('HeaderComponent', () => {
   const breakpoint = (matches: boolean): Observable<BreakpointState> => of({matches, breakpoints: {}});
 
   const breakpointObserver = {
-    observe(): Observable<BreakpointState> {
-      return breakpoint(false);
-    }
+    observe: jest.fn( () =>  breakpoint(false))
   };
-  let breakpointSpy: Spy;
-  let observeSpy: Spy;
-
-  beforeEach(() => {
-    breakpointSpy = spyOn(breakpointObserver, 'observe');
-    observeSpy = breakpointSpy.and.returnValue(breakpoint(false));
-  });
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -73,19 +63,15 @@ describe('HeaderComponent', () => {
   });
 
   describe('buttons on the header in desktop mode', () => {
-    beforeEach(() => {
-      // TODO: I HATE ANGULAR TESTING........ STILL DOESN'T DO ANYTHING
-      breakpointSpy.and.returnValue(breakpoint(false));
-    });
 
     it('should show the Twitch button', () => {
       const twitchButton = fixture.debugElement.nativeElement.querySelector('#twitch-header-btn');
-      expect(twitchButton).toBeTruthy('Expected the Twitch button to be visible by id: [twitch-header-btn] but it was not!');
+      expect(twitchButton).toBeTruthy();
     });
   });
 
   it('should have ngenius gaming as the title', () => {
-    const title = fixture.debugElement.nativeElement.querySelector('#application-title').innerText;
+    const title = fixture.nativeElement.querySelector('#application-title').textContent.trim();
     const expectedTitle = configuration.root.flags.beta
       ? configuration.root.applicationTitle + ' BETA'
       : configuration.root.applicationTitle;

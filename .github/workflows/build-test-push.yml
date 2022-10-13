@@ -32,9 +32,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - name: npm install angular/cli, npm ci project, ng build --aot, ng test
-        run: |
-          npm install -g @angular/cli
-          npm ci
-          ng build --aot
-          ng test
+      - name: configure angular cli
+        run: npm install -g @angular/cli
+      - name: npm ci
+        run: npm ci
+      - name: ng build --aot
+        run: ng build --aot
+      - name: ng test
+        run: ng test

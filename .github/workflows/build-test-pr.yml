@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [16]
 
     steps:
       - name: Install ChromeDriver
@@ -26,14 +26,16 @@ jobs:
             && sudo mv chromedriver /usr/local/bin/chromedriver \
             && sudo chmod +x /usr/local/bin/chromedriver \
             && chromedriver --version
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - name: npm install angular/cli, npm ci project, ng build --aot, ng test
-        run: |
-          npm install -g @angular/cli
-          npm ci
-          ng build --aot
-          ng test
+      - name: configure angular cli
+        run: npm install -g @angular/cli
+      - name: npm ci
+        run: npm ci
+      - name: ng build --aot
+        run: ng build --aot
+      - name: ng test
+        run: ng test

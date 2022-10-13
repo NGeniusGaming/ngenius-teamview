@@ -138,7 +138,6 @@
       }
     }
   },
-  "defaultProject": "ngenius-teamview",
   "schematics": {
     "@schematics/angular:component": {
       "style": "scss"

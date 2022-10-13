@@ -24,9 +24,9 @@
     "@angular/router": "^14.2.6",
     "@briebug/jest-schematic": "^4.0.0",
     "angular-cli-ghpages": "1.0.3",
-    "rxjs": "~6.5.4",
-    "tslib": "^2.0.0",
-    "zone.js": "~0.11.4"
+    "rxjs": "~7.5.7",
+    "tslib": "^2.4.0",
+    "zone.js": "~0.11.8"
   },
   "devDependencies": {
     "@angular-builders/jest": "12.1.2",
